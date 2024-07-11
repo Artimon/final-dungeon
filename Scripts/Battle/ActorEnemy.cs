@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using FinalDungeon.Extensions;
+using Godot;
 
 namespace FinalDungeon.Battle;
 
@@ -17,6 +18,8 @@ public partial class ActorEnemy : ActorBase {
 		_maxHits = 250;
 		_speed = 3;
 		isEnemy = true;
+
+		_animationPlayer.AnimationFinished += OnDeathAnimationFinished;
 	}
 
 	public override bool TryBeginAction() {
@@ -46,9 +49,17 @@ public partial class ActorEnemy : ActorBase {
 			return;
 		}
 
-		ControllerActors.instance.Register(this);
+		ControllerActors.instance.Unregister(this);
 
 		_animationPlayer.Play("Death");
+	}
+
+	public void OnDeathAnimationFinished(StringName animationName) {
+		switch (animationName) {
+			case "Death":
+				this.Remove();
+				break;
+		}
 	}
 
 	public override void OnActionReady() {

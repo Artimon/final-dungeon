@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Godot;
 
 namespace FinalDungeon.Battle.UserInterface;
@@ -23,6 +24,8 @@ public partial class ComponentActionMenu : Control {
 
 	public Action _preflightAction;
 
+	public ActorBase[] _lastTargetedActors = Array.Empty<ActorBase>();
+
 	public bool IsTargeting => _preflightAction != null;
 
 	public override void _EnterTree() {
@@ -42,22 +45,6 @@ public partial class ComponentActionMenu : Control {
 		foreach (var actor in ControllerActors.instance.Actors) {
 			actor.Untarget();
 		}
-	}
-
-	public void _SubmitAction() {
-		var action = _preflightAction;
-
-		action.targetActors = ControllerActors.instance.Targeted.ToArray();
-
-		_actor.action = action;
-		_preflightAction = default;
-		_inputAudio.Play();
-
-		UntargetAllActors();
-
-		ControllerAtb.instance.Enqueue(_actor);
-
-		// @TODO Save last confirmed enemy list.
 	}
 
 	public void _TryConfirm(InputEvent @event) {
@@ -94,13 +81,39 @@ public partial class ComponentActionMenu : Control {
 		_inputAudio.Play();
 
 		UntargetAllActors();
-
-		// @TODO Load last confirmed enemy list, if available.
-		ControllerActors.instance.Enemies.First().Target();
+		_GetTargetEnemy().Target();
 
 		_preflightAction = new Action {
 			actionType = actionType
 		};
+	}
+
+	private ActorBase _GetTargetEnemy() {
+		if (_lastTargetedActors.Length > 0) {
+			var enemy = _lastTargetedActors[0];
+
+			if (!enemy.IsDead) {
+				return enemy;
+			}
+		}
+
+		return ControllerActors.instance.Enemies.First();
+	}
+
+	public void _SubmitAction() {
+		var action = _preflightAction;
+
+		action.targetActors = ControllerActors.instance.Targeted.ToArray();
+
+		_lastTargetedActors = action.targetActors;
+
+		_actor.action = action;
+		_preflightAction = default;
+		_inputAudio.Play();
+
+		UntargetAllActors();
+
+		ControllerAtb.instance.Enqueue(_actor);
 	}
 
 	public void _SelectNextTarget(Direction direction) {

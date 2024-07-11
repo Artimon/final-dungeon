@@ -20,6 +20,8 @@ public abstract partial class ActorBase : Node2D {
 
 	public bool IsTargeted => _targetMarker.Visible;
 
+	public bool IsDead => _hits <= 0;
+
 	public override void _EnterTree() {
 		_targetMarker.Hide();
 
