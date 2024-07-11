@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bxm8y5mo3gbkd"]
+
+[ext_resource type="Script" path="res://Scripts/EnemySetup.cs" id="1_ebcxx"]
+[ext_resource type="Texture2D" uid="uid://c8rjrubxfsq6q" path="res://Images/Enemies/TestEnemy2.png" id="1_l64ex"]
+[ext_resource type="Texture2D" uid="uid://dlwjip22tp4br" path="res://Images/Enemies/TestEnemy2 Wounded.png" id="2_hfc1e"]
+
+[resource]
+script = ExtResource("1_ebcxx")
+_textures = Array[Texture2D]([ExtResource("1_l64ex"), ExtResource("2_hfc1e")])

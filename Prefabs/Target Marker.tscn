@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://clj1uq1my50s8"]
+
+[ext_resource type="Texture2D" uid="uid://b2cmsfk5ibui3" path="res://Images/UserInterface/Target Marker Animation.png" id="1_xgbir"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tgtnu"]
+atlas = ExtResource("1_xgbir")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onaig"]
+atlas = ExtResource("1_xgbir")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4j7fe"]
+atlas = ExtResource("1_xgbir")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_acmu4"]
+atlas = ExtResource("1_xgbir")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cxtp6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tgtnu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onaig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4j7fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acmu4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Target Marker" type="AnimatedSprite2D"]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_cxtp6")
+autoplay = "default"
+frame = 3
+frame_progress = 0.198592

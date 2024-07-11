@@ -1,0 +1,285 @@
+[gd_scene load_steps=32 format=3 uid="uid://dcs3bu26h6v10"]
+
+[ext_resource type="AudioStream" uid="uid://h36cq2vy7oof" path="res://Audio/Bottomless Abyss.mp3" id="1_2fmiq"]
+[ext_resource type="Theme" uid="uid://dot4j2g5m155i" path="res://Images/Config/MainTheme.tres" id="1_reoa1"]
+[ext_resource type="Texture2D" uid="uid://dnsxpmanmt2vs" path="res://Images/AtbBarUnder.png" id="2_bne0p"]
+[ext_resource type="Script" path="res://Scripts/Battle/Controllers/ControllerAtb.cs" id="2_nq46p"]
+[ext_resource type="Texture2D" uid="uid://dv15qcvpfh7qi" path="res://Images/HitsBarUnder.png" id="2_rce83"]
+[ext_resource type="Script" path="res://Scripts/Battle/UserInterface/ElementHeroStatus.cs" id="2_scsjx"]
+[ext_resource type="Script" path="res://Scripts/Battle/Controllers/ControllerActors.cs" id="2_stuf5"]
+[ext_resource type="Texture2D" uid="uid://btdp55btmqf7b" path="res://Images/Forest Background.png" id="2_wlsai"]
+[ext_resource type="Texture2D" uid="uid://blvesijpkf74y" path="res://Images/HitsBarProgress.png" id="3_hqbma"]
+[ext_resource type="Script" path="res://Scripts/Battle/ActorHero.cs" id="3_vgpgq"]
+[ext_resource type="Texture2D" uid="uid://ddq43x8r1c2h8" path="res://Images/Characters/Terra Walk North.png" id="4_4seot"]
+[ext_resource type="Texture2D" uid="uid://rrgbwvniop56" path="res://Images/AtbBarProgress.png" id="5_btpbr"]
+[ext_resource type="Script" path="res://Scripts/Battle/ActorEnemy.cs" id="5_jvit1"]
+[ext_resource type="Texture2D" uid="uid://c8rjrubxfsq6q" path="res://Images/Enemies/TestEnemy2.png" id="5_osqmd"]
+[ext_resource type="Texture2D" uid="uid://dlejc4c2t0w2e" path="res://Images/UserInterface/Attack Icon.png" id="8_mhcs5"]
+[ext_resource type="Script" path="res://Scripts/Battle/UserInterface/ComponentActionMenu.cs" id="8_rckm0"]
+[ext_resource type="AudioStream" uid="uid://dwsbn3he0bkid" path="res://Audio/ui_menu_button_click_19.wav" id="10_8aifh"]
+[ext_resource type="PackedScene" uid="uid://clj1uq1my50s8" path="res://Prefabs/Target Marker.tscn" id="13_f2rsc"]
+[ext_resource type="Resource" uid="uid://bfdjwgsbxrfxp" path="res://Configs/Test Enemy 1.tres" id="17_13xmj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6k122"]
+font_size = 8
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt47q"]
+atlas = ExtResource("4_4seot")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2h3wu"]
+atlas = ExtResource("4_4seot")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8jcl"]
+atlas = ExtResource("4_4seot")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1vyj"]
+atlas = ExtResource("4_4seot")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f6fdk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt47q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2h3wu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8jcl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1vyj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_e6frh"]
+resource_name = "Attack"
+length = 1.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35, 1, 1.35),
+"transitions": PackedFloat32Array(-2, 1, -2, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -16), Vector2(0, -16), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7xvln"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0agf6"]
+_data = {
+"Attack": SubResource("Animation_e6frh"),
+"RESET": SubResource("Animation_7xvln")
+}
+
+[sub_resource type="Animation" id="Animation_clrqq"]
+resource_name = "Death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333334, 1),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xmsqv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Enemy Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ijv7m"]
+_data = {
+"Death": SubResource("Animation_clrqq"),
+"RESET": SubResource("Animation_xmsqv")
+}
+
+[node name="Battle Scene" type="Node2D"]
+
+[node name="Controllers" type="Node2D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Controllers"]
+stream = ExtResource("1_2fmiq")
+volume_db = -20.0
+autoplay = true
+
+[node name="ControllerAtb" type="Node" parent="Controllers"]
+script = ExtResource("2_nq46p")
+
+[node name="ControllerActors" type="Node" parent="Controllers"]
+script = ExtResource("2_stuf5")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ElementHeroStatus Terra" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("_hitsProgress", "_atbProgress")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_scsjx")
+_hitsProgress = NodePath("Control/Hits Progress")
+_atbProgress = NodePath("Control/Atb Progress")
+
+[node name="Control" type="Control" parent="CanvasLayer/ElementHeroStatus Terra"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 169.0
+offset_top = 95.0
+offset_right = 279.0
+offset_bottom = 135.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_reoa1")
+
+[node name="Hits Progress" type="TextureProgressBar" parent="CanvasLayer/ElementHeroStatus Terra/Control"]
+layout_mode = 0
+offset_top = 7.0
+offset_right = 64.0
+offset_bottom = 11.0
+max_value = 1.0
+step = 0.001
+value = 0.5
+texture_under = ExtResource("2_rce83")
+texture_progress = ExtResource("3_hqbma")
+texture_progress_offset = Vector2(1, 1)
+
+[node name="Atb Progress" type="TextureProgressBar" parent="CanvasLayer/ElementHeroStatus Terra/Control"]
+layout_mode = 0
+offset_top = 10.0
+offset_right = 64.0
+offset_bottom = 14.0
+max_value = 1.0
+step = 0.001
+value = 0.5
+texture_under = ExtResource("2_bne0p")
+texture_progress = ExtResource("5_btpbr")
+texture_progress_offset = Vector2(1, 1)
+
+[node name="Name Label" type="Label" parent="CanvasLayer/ElementHeroStatus Terra/Control"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 10.0
+text = "Terra"
+label_settings = SubResource("LabelSettings_6k122")
+
+[node name="Hits Label" type="Label" parent="CanvasLayer/ElementHeroStatus Terra/Control"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 10.0
+text = "713"
+label_settings = SubResource("LabelSettings_6k122")
+horizontal_alignment = 2
+
+[node name="ComponentActionMenu" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("_attackIcon", "_inputAudio")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 37.0
+offset_top = 110.0
+offset_right = 37.0
+offset_bottom = 110.0
+script = ExtResource("8_rckm0")
+_attackIcon = NodePath("TextureRect")
+_inputAudio = NodePath("AudioStreamPlayer")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ComponentActionMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 16.0
+grow_horizontal = 2
+texture = ExtResource("8_mhcs5")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/ComponentActionMenu"]
+stream = ExtResource("10_8aifh")
+volume_db = -10.0
+
+[node name="Background Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(128, 74)
+texture = ExtResource("2_wlsai")
+
+[node name="Camera2D" type="Camera2D" parent="Background Sprite2D"]
+
+[node name="Hero Terra" type="Node2D" parent="Background Sprite2D" node_paths=PackedStringArray("_status", "_animationPlayer", "_targetMarker")]
+position = Vector2(0, 46)
+script = ExtResource("3_vgpgq")
+_status = NodePath("../../CanvasLayer/ElementHeroStatus Terra")
+_animationPlayer = NodePath("AnimationPlayer")
+_targetMarker = NodePath("Display Node2D/Target Marker")
+
+[node name="Display Node2D" type="Node2D" parent="Background Sprite2D/Hero Terra"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Background Sprite2D/Hero Terra/Display Node2D"]
+sprite_frames = SubResource("SpriteFrames_f6fdk")
+autoplay = "default"
+frame = 3
+frame_progress = 0.875051
+
+[node name="Target Marker" parent="Background Sprite2D/Hero Terra/Display Node2D" instance=ExtResource("13_f2rsc")]
+position = Vector2(0, -18)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Background Sprite2D/Hero Terra"]
+libraries = {
+"": SubResource("AnimationLibrary_0agf6")
+}
+
+[node name="Enemy 1" type="Node2D" parent="Background Sprite2D" node_paths=PackedStringArray("_sprite", "_animationPlayer", "_targetMarker")]
+script = ExtResource("5_jvit1")
+_setup = ExtResource("17_13xmj")
+_sprite = NodePath("Enemy Sprite2D")
+_animationPlayer = NodePath("AnimationPlayer")
+_targetMarker = NodePath("Target Marker")
+
+[node name="Enemy Sprite2D" type="Sprite2D" parent="Background Sprite2D/Enemy 1"]
+texture = ExtResource("5_osqmd")
+
+[node name="Target Marker" parent="Background Sprite2D/Enemy 1" instance=ExtResource("13_f2rsc")]
+position = Vector2(0, -30)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Background Sprite2D/Enemy 1"]
+libraries = {
+"": SubResource("AnimationLibrary_ijv7m")
+}

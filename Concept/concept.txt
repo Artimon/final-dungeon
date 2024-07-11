@@ -1,0 +1,17 @@
+	Item
+Spell		Action
+	Attack
+
+	Item
+Spell	Attack	Defend
+	???
+
+
+1. Attack
+2. Spell
+3. Items
+4. Actions: Defend/Raub/Fliehen/Reihe ändern etc.
+
+
+"Gunblade" Funktion für etwas Geschick mit drin.
+Autoplay für alle außer Main Char?

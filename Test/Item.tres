@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://cqnjsnapk8si"]
+
+[ext_resource type="Script" path="res://Scripts/ResourceItem/Item.cs" id="1_mh7yb"]
+[ext_resource type="Resource" uid="uid://cql6m2vwi3agx" path="res://Test/ItemsList.tres" id="1_yx7an"]
+
+[resource]
+script = ExtResource("1_mh7yb")
+ItemName = ""
+Gold = 50
+ItemsList = ExtResource("1_yx7an")
