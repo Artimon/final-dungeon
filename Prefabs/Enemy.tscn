@@ -81,10 +81,11 @@ _targetMarker = NodePath("Target Marker")
 
 [node name="Enemy Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_tarid")
+position = Vector2(0, -24)
 texture = ExtResource("3_u6fg3")
 
 [node name="Target Marker" parent="." instance=ExtResource("4_7my7p")]
-position = Vector2(0, -30)
+position = Vector2(0, -54)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

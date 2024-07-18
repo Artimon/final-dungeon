@@ -52,6 +52,10 @@ public partial class ComponentActionMenu : Control {
 			return;
 		}
 
+		if (!_actor.IsReady) {
+			return;
+		}
+
 		if (_preflightAction != null) {
 			_SubmitAction();
 
@@ -104,16 +108,15 @@ public partial class ComponentActionMenu : Control {
 		var action = _preflightAction;
 
 		action.targetActors = ControllerActors.instance.Targeted.ToArray();
+		action.animation = new MeleeAnimation(_actor, action.targetActors[0], action);
 
 		_lastTargetedActors = action.targetActors;
-
-		_actor.action = action;
 		_preflightAction = default;
-		_inputAudio.Play();
 
 		UntargetAllActors();
 
-		ControllerAtb.instance.Enqueue(_actor);
+		_actor.TryBeginAction(action);
+		_inputAudio.Play();
 	}
 
 	public void _SelectNextTarget(Direction direction) {

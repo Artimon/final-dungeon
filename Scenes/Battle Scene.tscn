@@ -207,9 +207,10 @@ texture = ExtResource("2_wlsai")
 [node name="Actor Container" type="Node2D" parent="Background Sprite2D"]
 y_sort_enabled = true
 
-[node name="Hero Terra" type="Node2D" parent="Background Sprite2D/Actor Container" node_paths=PackedStringArray("_status", "_animationPlayer", "_targetMarker")]
-position = Vector2(0, 46)
+[node name="Hero Terra" type="Node2D" parent="Background Sprite2D/Actor Container" node_paths=PackedStringArray("display", "_status", "_animationPlayer", "_targetMarker")]
+position = Vector2(0, 56)
 script = ExtResource("3_vgpgq")
+display = NodePath("Display Node2D")
 _status = NodePath("../../../CanvasLayer/ElementHeroStatus Terra")
 _animationPlayer = NodePath("AnimationPlayer")
 _targetMarker = NodePath("Display Node2D/Target Marker")
@@ -217,13 +218,14 @@ _targetMarker = NodePath("Display Node2D/Target Marker")
 [node name="Display Node2D" type="Node2D" parent="Background Sprite2D/Actor Container/Hero Terra"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D"]
+position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_f6fdk")
 autoplay = "default"
 frame = 3
 frame_progress = 0.875051
 
 [node name="Target Marker" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D" instance=ExtResource("13_f2rsc")]
-position = Vector2(0, -18)
+position = Vector2(0, -30)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Background Sprite2D/Actor Container/Hero Terra"]
 libraries = {
@@ -231,13 +233,13 @@ libraries = {
 }
 
 [node name="Enemy 1" parent="Background Sprite2D/Actor Container" instance=ExtResource("17_pxx0v")]
-position = Vector2(-29, 0)
+position = Vector2(-29, 22)
 
 [node name="Enemy 2" parent="Background Sprite2D/Actor Container" instance=ExtResource("17_pxx0v")]
-position = Vector2(34, 0)
+position = Vector2(34, 22)
 
 [node name="Enemy 3" parent="Background Sprite2D/Actor Container" instance=ExtResource("17_pxx0v")]
-position = Vector2(90, -22)
+position = Vector2(90, 0)
 
 [node name="Enemy 4" parent="Background Sprite2D/Actor Container" instance=ExtResource("17_pxx0v")]
-position = Vector2(-83, -22)
+position = Vector2(-83, 0)

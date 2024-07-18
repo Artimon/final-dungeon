@@ -7,8 +7,7 @@ public class Action {
 	}
 
 	public ActionTypes actionType;
+	public IAnimation animation;
 
 	public ActorBase[] targetActors;
-
-	public bool isUsed;
 }

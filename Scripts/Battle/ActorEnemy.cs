@@ -22,7 +22,7 @@ public partial class ActorEnemy : ActorBase {
 		_animationPlayer.AnimationFinished += OnDeathAnimationFinished;
 	}
 
-	public override bool TryBeginAction() {
+	public override bool TryBeginAction(Action action) {
 		throw new System.NotImplementedException();
 	}
 

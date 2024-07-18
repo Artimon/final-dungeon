@@ -13,10 +13,16 @@ public abstract partial class ActorBase : Node2D {
 	public bool _lockActionTime;
 	public double _actionTime; // 0...1
 
-	public Action action;
+	/**
+	 * The current action that the actor is performing.
+	 * Is reset to null when the action is finished.
+	 */
+	public Action _action;
 
 	[Export]
 	public AnimatedSprite2D _targetMarker;
+
+	public bool IsReady => _action == null && _actionTime >= 1d;
 
 	public bool IsTargeted => _targetMarker.Visible;
 
@@ -29,7 +35,11 @@ public abstract partial class ActorBase : Node2D {
 		ControllerActors.instance.Register(this);
 	}
 
+	public virtual void _OnProcess(double delta) { }
+
 	public override void _Process(double delta) {
+		_OnProcess(delta);
+
 		if (_lockActionTime) {
 			return;
 		}
@@ -56,7 +66,7 @@ public abstract partial class ActorBase : Node2D {
 		_targetMarker.Hide();
 	}
 
-	public abstract bool TryBeginAction();
+	public abstract bool TryBeginAction(Action action);
 
 	public abstract void ApplyDamage(float damage);
 
@@ -65,6 +75,7 @@ public abstract partial class ActorBase : Node2D {
 	public abstract void OnActionReady();
 
 	public void ResetActionTime() {
+		_action = null;
 		_actionTime = 0d;
 		_lockActionTime = false;
 

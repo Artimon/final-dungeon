@@ -5,6 +5,9 @@ namespace FinalDungeon.Battle;
 
 public partial class ActorHero : ActorBase {
 	[Export]
+	public Node2D display;
+
+	[Export]
 	public ElementHeroStatus _status;
 
 	[Export]
@@ -16,29 +19,39 @@ public partial class ActorHero : ActorBase {
 		_speed = 5;
 
 		_status.SetHits(_hits, _maxHits);
+		_animationPlayer.AnimationFinished += OnAttackAnimationFinished;
 	}
 
-	public override bool TryBeginAction() {
-		if (action == null) {
+	public override void _OnProcess(double delta) {
+		_action?.animation.Process(delta);
+	}
+
+	public override bool TryBeginAction(Action action) {
+		if (_action != null) {
 			return false;
 		}
 
-		if (action.isUsed) {
-			return false;
-		}
+		_action = action;
 
-		action.isUsed = true;
-
-		_animationPlayer.Play("Attack");
-		foreach (var actor in action.targetActors) {
-			actor.ApplyDamage(150f);
-		}
+		// _animationPlayer.Play("Attack");
 
 		return true;
 	}
 
 	public override void ApplyDamage(float damage) {
 		throw new System.NotImplementedException();
+	}
+
+	public void OnAttackAnimationFinished(StringName animationName) {
+		switch (animationName) {
+			case "Jump":
+				foreach (var actor in _action.targetActors) {
+					actor.ApplyDamage(150f);
+				}
+
+				ResetActionTime();
+				break;
+		}
 	}
 
 	public override void OnActionUpdate() {
