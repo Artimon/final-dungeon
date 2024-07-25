@@ -20,8 +20,8 @@ public partial class ActorEnemy : ActorBase {
 	public ShaderMaterial _deathMaterial;
 
 	public override void _Ready() {
-		_hits = 250;
-		_maxHits = 250;
+		_hits = 250f;
+		_maxHits = 250f;
 		_actionDuration = 10d;
 		_actionCooldown = (GD.Randf() + GD.Randf()) / 2d;
 		GD.Print($"Initial action cooldown: {_actionCooldown}");
@@ -34,6 +34,7 @@ public partial class ActorEnemy : ActorBase {
 	public override bool TryBeginAction(Action action) {
 		_sprite.Material = _actionMaterial;
 		_animationPlayer.Play("Action");
+		// @TODO During action the enemy can be interrupted and the atb has to restart.
 
 		return true;
 	}
@@ -75,10 +76,23 @@ public partial class ActorEnemy : ActorBase {
 		return true;
 	}
 
+	private void Attack() {
+		// @TODO Determine the hero that is currently not performing an action at the beginning of the action.
+		var targetHero = ControllerActors.instance.Heroes.GetRandomElement();
+
+		var action = new Action {
+			actionType = Action.ActionTypes.Attack,
+			targetActors = new[] { targetHero }
+		};
+
+		action.DamageTargets(5);
+	}
+
 	public void OnAnimationFinished(StringName animationName) {
 		switch (animationName) {
 			case "Action":
 				GD.Print("Action finished");
+				Attack();
 				ResetAction();
 				break;
 

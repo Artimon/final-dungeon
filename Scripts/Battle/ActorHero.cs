@@ -23,8 +23,8 @@ public partial class ActorHero : ActorBase {
 	public Weapon weapon;
 
 	public override void _Ready() {
-		_hits = 713;
-		_maxHits = 978;
+		_hits = 713f;
+		_maxHits = 978f;
 		_actionDuration = 5d;
 		_actionCooldown = (GD.Randf() + GD.Randf()) / 2d;
 
@@ -46,7 +46,8 @@ public partial class ActorHero : ActorBase {
 	}
 
 	public override void ApplyDamage(float damage) {
-		throw new System.NotImplementedException();
+		_hits -= damage;
+		_status.SetHits(_hits, _maxHits);
 	}
 
 	public void ActionFinished() {

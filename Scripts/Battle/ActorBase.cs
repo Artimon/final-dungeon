@@ -4,8 +4,8 @@ namespace FinalDungeon.Battle;
 
 [GlobalClass]
 public abstract partial class ActorBase : Node2D {
-	public int _hits;
-	public int _maxHits;
+	public float _hits;
+	public float _maxHits;
 
 	public bool isEnemy;
 
