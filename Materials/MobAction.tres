@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b8v57evrlvoyr"]
+
+[ext_resource type="Shader" uid="uid://bwfuhcjqjhar" path="res://Shaders/MobAction.tres" id="1_o5bm0"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_o5bm0")
+shader_parameter/Flash = null

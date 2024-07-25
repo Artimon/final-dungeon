@@ -6,12 +6,13 @@ namespace FinalDungeon.Battle;
 public abstract partial class ActorBase : Node2D {
 	public int _hits;
 	public int _maxHits;
-	public int _speed;
 
 	public bool isEnemy;
 
 	public bool _lockActionTime;
-	public double _actionTime; // 0...1
+
+	public double _actionDuration;
+	public double _actionCooldown; // 0...1
 
 	/**
 	 * The current action that the actor is performing.
@@ -22,7 +23,7 @@ public abstract partial class ActorBase : Node2D {
 	[Export]
 	public AnimatedSprite2D _targetMarker;
 
-	public bool IsReady => _action == null && _actionTime >= 1d;
+	public bool IsReady => _action == null && _actionCooldown >= 1d;
 
 	public bool IsTargeted => _targetMarker.Visible;
 
@@ -44,11 +45,11 @@ public abstract partial class ActorBase : Node2D {
 			return;
 		}
 
-		var speedFactor = 0.5d + _speed * 0.1d;
+		var speedFactor = 1f / _actionDuration;
 
-		_actionTime += speedFactor * delta;
-		if (_actionTime > 1d) {
-			_actionTime = 1d;
+		_actionCooldown += speedFactor * delta;
+		if (_actionCooldown > 1d) {
+			_actionCooldown = 1d;
 			_lockActionTime = true;
 
 			OnActionUpdate();
@@ -76,7 +77,7 @@ public abstract partial class ActorBase : Node2D {
 
 	public void ResetAction() {
 		_action = null;
-		_actionTime = 0d;
+		_actionCooldown = 0d;
 		_lockActionTime = false;
 
 		OnActionUpdate();

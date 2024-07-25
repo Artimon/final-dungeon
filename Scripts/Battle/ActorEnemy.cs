@@ -13,17 +13,29 @@ public partial class ActorEnemy : ActorBase {
 	[Export]
 	public AnimationPlayer _animationPlayer;
 
+	[Export]
+	public ShaderMaterial _actionMaterial;
+
+	[Export]
+	public ShaderMaterial _deathMaterial;
+
 	public override void _Ready() {
 		_hits = 250;
 		_maxHits = 250;
-		_speed = 3;
+		_actionDuration = 10d;
+		_actionCooldown = (GD.Randf() + GD.Randf()) / 2d;
+		GD.Print($"Initial action cooldown: {_actionCooldown}");
+
 		isEnemy = true;
 
-		_animationPlayer.AnimationFinished += OnDeathAnimationFinished;
+		_animationPlayer.AnimationFinished += OnAnimationFinished;
 	}
 
 	public override bool TryBeginAction(Action action) {
-		throw new System.NotImplementedException();
+		_sprite.Material = _actionMaterial;
+		_animationPlayer.Play("Action");
+
+		return true;
 	}
 
 	public void UpdateTextureBasedOnHealth() {
@@ -43,6 +55,7 @@ public partial class ActorEnemy : ActorBase {
 
 		var isDead = TryDeath();
 		if (!isDead) {
+			_lockActionTime = true;
 			_animationPlayer.Play("Hit");
 		}
 	}
@@ -54,13 +67,25 @@ public partial class ActorEnemy : ActorBase {
 
 		ControllerActors.instance.Unregister(this);
 
+		SetProcess(false);
+
+		_sprite.Material = _deathMaterial;
 		_animationPlayer.Play("Death");
 
 		return true;
 	}
 
-	public void OnDeathAnimationFinished(StringName animationName) {
+	public void OnAnimationFinished(StringName animationName) {
 		switch (animationName) {
+			case "Action":
+				GD.Print("Action finished");
+				ResetAction();
+				break;
+
+			case "Hit":
+				_lockActionTime = false;
+				break;
+
 			case "Death":
 				this.Remove();
 				break;
@@ -68,8 +93,9 @@ public partial class ActorEnemy : ActorBase {
 	}
 
 	public override void OnActionReady() {
+		_sprite.Material = null;
 		GD.Print("Enemy Attack rdy");
 
-		ResetAction();
+		TryBeginAction(null);
 	}
 }

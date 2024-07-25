@@ -1,81 +1,25 @@
-[gd_scene load_steps=11 format=3 uid="uid://okicl14ya4ii"]
+[gd_scene load_steps=12 format=3 uid="uid://okicl14ya4ii"]
 
 [ext_resource type="Script" path="res://Scripts/Battle/ActorEnemy.cs" id="1_idx4y"]
 [ext_resource type="Resource" uid="uid://bfdjwgsbxrfxp" path="res://Configs/Test Enemy 1.tres" id="2_dmrhw"]
-[ext_resource type="Shader" uid="uid://bmthha762oxhw" path="res://Shaders/MobDeath.tres" id="3_auq3o"]
+[ext_resource type="Material" uid="uid://b8v57evrlvoyr" path="res://Materials/MobAction.tres" id="3_h1ac7"]
 [ext_resource type="Texture2D" uid="uid://c8rjrubxfsq6q" path="res://Images/Enemies/TestEnemy2.png" id="3_u6fg3"]
 [ext_resource type="PackedScene" uid="uid://clj1uq1my50s8" path="res://Prefabs/Target Marker.tscn" id="4_7my7p"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tarid"]
-resource_local_to_scene = true
-shader = ExtResource("3_auq3o")
-shader_parameter/ColorParameter = Color(0.527939, 0.662527, 1, 1)
-shader_parameter/Progress = 0.0
+[ext_resource type="Material" uid="uid://c32tdyrmbhjbd" path="res://Materials/MobDeath.tres" id="5_gde36"]
 
 [sub_resource type="Animation" id="Animation_clrqq"]
 resource_name = "Death"
 tracks/0/type = "value"
 tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/path = NodePath("Display Node2D/Enemy Sprite2D:modulate")
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display Node2D/Enemy Sprite2D:material:shader_parameter/Progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.0333334, 1),
-"transitions": PackedFloat32Array(1, 0.5),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Display Node2D/Enemy Sprite2D:material:shader_parameter/Progress")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 0.5),
 "update": 0,
 "values": [0.0, 1.0]
-}
-
-[sub_resource type="Animation" id="Animation_xmsqv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/path = NodePath("Display Node2D/Enemy Sprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Display Node2D/Enemy Sprite2D:material:shader_parameter/Progress")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Display Node2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_0203f"]
@@ -94,8 +38,64 @@ tracks/0/keys = {
 "values": [Vector2(-1, 0), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_xmsqv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display Node2D/Enemy Sprite2D:material:shader_parameter/Progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Display Node2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Display Node2D/Enemy Sprite2D:material:shader_parameter/Flash")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_ubaju"]
+resource_name = "Action"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display Node2D/Enemy Sprite2D:material:shader_parameter/Flash")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1.0, null, 1.0, null]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ijv7m"]
 _data = {
+"Action": SubResource("Animation_ubaju"),
 "Death": SubResource("Animation_clrqq"),
 "Hit": SubResource("Animation_0203f"),
 "RESET": SubResource("Animation_xmsqv")
@@ -106,12 +106,13 @@ script = ExtResource("1_idx4y")
 _setup = ExtResource("2_dmrhw")
 _sprite = NodePath("Display Node2D/Enemy Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
+_actionMaterial = ExtResource("3_h1ac7")
+_deathMaterial = ExtResource("5_gde36")
 _targetMarker = NodePath("Display Node2D/Target Marker")
 
 [node name="Display Node2D" type="Node2D" parent="."]
 
 [node name="Enemy Sprite2D" type="Sprite2D" parent="Display Node2D"]
-material = SubResource("ShaderMaterial_tarid")
 position = Vector2(0, -24)
 texture = ExtResource("3_u6fg3")
 

@@ -25,7 +25,8 @@ public partial class ActorHero : ActorBase {
 	public override void _Ready() {
 		_hits = 713;
 		_maxHits = 978;
-		_speed = 5;
+		_actionDuration = 5d;
+		_actionCooldown = (GD.Randf() + GD.Randf()) / 2d;
 
 		_status.SetHits(_hits, _maxHits);
 	}
@@ -55,7 +56,7 @@ public partial class ActorHero : ActorBase {
 	}
 
 	public override void OnActionUpdate() {
-		_status.SetAtb(_actionTime);
+		_status.SetAtb(_actionCooldown);
 	}
 
 	public override void OnActionReady() {
