@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dih5stxbw7uj1"
+path="res://.godot/imported/Player Jump.wav-af53b92e8b6443f9bfbd3a865bb566ff.sample"
+
+[deps]
+
+source_file="res://Audio/Player Jump.wav"
+dest_files=["res://.godot/imported/Player Jump.wav-af53b92e8b6443f9bfbd3a865bb566ff.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

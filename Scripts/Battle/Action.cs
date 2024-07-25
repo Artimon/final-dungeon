@@ -10,4 +10,10 @@ public class Action {
 	public IAnimation animation;
 
 	public ActorBase[] targetActors;
+
+	public void DamageTargets(float damage) {
+		foreach (var actor in targetActors) {
+			actor.ApplyDamage(damage);
+		}
+	}
 }

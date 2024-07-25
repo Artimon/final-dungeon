@@ -11,7 +11,16 @@ public partial class ActorHero : ActorBase {
 	public ElementHeroStatus _status;
 
 	[Export]
-	public AnimationPlayer _animationPlayer;
+	public AnimationPlayer animationPlayer;
+
+	[Export]
+	public AnimatedSprite2D animatedSprite;
+
+	[Export]
+	public AudioStreamPlayer jumpAudio;
+
+	[Export]
+	public Weapon weapon;
 
 	public override void _Ready() {
 		_hits = 713;
@@ -19,7 +28,6 @@ public partial class ActorHero : ActorBase {
 		_speed = 5;
 
 		_status.SetHits(_hits, _maxHits);
-		_animationPlayer.AnimationFinished += OnAttackAnimationFinished;
 	}
 
 	public override void _OnProcess(double delta) {
@@ -33,8 +41,6 @@ public partial class ActorHero : ActorBase {
 
 		_action = action;
 
-		// _animationPlayer.Play("Attack");
-
 		return true;
 	}
 
@@ -42,16 +48,10 @@ public partial class ActorHero : ActorBase {
 		throw new System.NotImplementedException();
 	}
 
-	public void OnAttackAnimationFinished(StringName animationName) {
-		switch (animationName) {
-			case "Jump":
-				foreach (var actor in _action.targetActors) {
-					actor.ApplyDamage(150f);
-				}
+	public void ActionFinished() {
+		animatedSprite.Play("default");
 
-				ResetActionTime();
-				break;
-		}
+		ResetAction();
 	}
 
 	public override void OnActionUpdate() {
@@ -59,10 +59,6 @@ public partial class ActorHero : ActorBase {
 	}
 
 	public override void OnActionReady() {
-		GD.Print("Player Attack rdy");
-
-		// ResetActionTime();
-
 		ComponentActionMenu.instance.TryShow(this);
 	}
 }

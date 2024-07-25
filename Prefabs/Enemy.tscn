@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://okicl14ya4ii"]
+[gd_scene load_steps=11 format=3 uid="uid://okicl14ya4ii"]
 
 [ext_resource type="Script" path="res://Scripts/Battle/ActorEnemy.cs" id="1_idx4y"]
 [ext_resource type="Resource" uid="uid://bfdjwgsbxrfxp" path="res://Configs/Test Enemy 1.tres" id="2_dmrhw"]
@@ -17,7 +17,7 @@ resource_name = "Death"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = false
-tracks/0/path = NodePath("Enemy Sprite2D:modulate")
+tracks/0/path = NodePath("Display Node2D/Enemy Sprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -29,7 +29,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Enemy Sprite2D:material:shader_parameter/Progress")
+tracks/1/path = NodePath("Display Node2D/Enemy Sprite2D:material:shader_parameter/Progress")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -44,7 +44,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = false
-tracks/0/path = NodePath("Enemy Sprite2D:modulate")
+tracks/0/path = NodePath("Display Node2D/Enemy Sprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -56,7 +56,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Enemy Sprite2D:material:shader_parameter/Progress")
+tracks/1/path = NodePath("Display Node2D/Enemy Sprite2D:material:shader_parameter/Progress")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -65,26 +65,57 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Display Node2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0203f"]
+resource_name = "Hit"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-1, 0), Vector2(0, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ijv7m"]
 _data = {
 "Death": SubResource("Animation_clrqq"),
+"Hit": SubResource("Animation_0203f"),
 "RESET": SubResource("Animation_xmsqv")
 }
 
 [node name="Enemy" type="Node2D" node_paths=PackedStringArray("_sprite", "_animationPlayer", "_targetMarker")]
 script = ExtResource("1_idx4y")
 _setup = ExtResource("2_dmrhw")
-_sprite = NodePath("Enemy Sprite2D")
+_sprite = NodePath("Display Node2D/Enemy Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
-_targetMarker = NodePath("Target Marker")
+_targetMarker = NodePath("Display Node2D/Target Marker")
 
-[node name="Enemy Sprite2D" type="Sprite2D" parent="."]
+[node name="Display Node2D" type="Node2D" parent="."]
+
+[node name="Enemy Sprite2D" type="Sprite2D" parent="Display Node2D"]
 material = SubResource("ShaderMaterial_tarid")
 position = Vector2(0, -24)
 texture = ExtResource("3_u6fg3")
 
-[node name="Target Marker" parent="." instance=ExtResource("4_7my7p")]
+[node name="Target Marker" parent="Display Node2D" instance=ExtResource("4_7my7p")]
 position = Vector2(0, -54)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

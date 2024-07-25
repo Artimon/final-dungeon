@@ -74,7 +74,7 @@ public abstract partial class ActorBase : Node2D {
 
 	public abstract void OnActionReady();
 
-	public void ResetActionTime() {
+	public void ResetAction() {
 		_action = null;
 		_actionTime = 0d;
 		_lockActionTime = false;

@@ -41,17 +41,22 @@ public partial class ActorEnemy : ActorBase {
 
 		UpdateTextureBasedOnHealth();
 
-		TryDeath();
+		var isDead = TryDeath();
+		if (!isDead) {
+			_animationPlayer.Play("Hit");
+		}
 	}
 
-	public void TryDeath() {
+	public bool TryDeath() {
 		if (_hits > 0) {
-			return;
+			return false;
 		}
 
 		ControllerActors.instance.Unregister(this);
 
 		_animationPlayer.Play("Death");
+
+		return true;
 	}
 
 	public void OnDeathAnimationFinished(StringName animationName) {
@@ -65,6 +70,6 @@ public partial class ActorEnemy : ActorBase {
 	public override void OnActionReady() {
 		GD.Print("Enemy Attack rdy");
 
-		ResetActionTime();
+		ResetAction();
 	}
 }
