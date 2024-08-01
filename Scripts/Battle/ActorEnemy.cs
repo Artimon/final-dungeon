@@ -14,6 +14,9 @@ public partial class ActorEnemy : ActorBase {
 	public AnimationPlayer _animationPlayer;
 
 	[Export]
+	public ActorCompDamageNumber _damageNumber;
+
+	[Export]
 	public ShaderMaterial _actionMaterial;
 
 	[Export]
@@ -50,7 +53,8 @@ public partial class ActorEnemy : ActorBase {
 	}
 
 	public override void ApplyDamage(float damage) {
-		_hits -= Mathf.RoundToInt(damage);
+		_hits -= damage;
+		_damageNumber.Show(damage);
 
 		UpdateTextureBasedOnHealth();
 

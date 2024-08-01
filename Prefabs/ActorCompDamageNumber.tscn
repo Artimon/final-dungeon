@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw7f3nfmkj42j"]
+
+[ext_resource type="Script" path="res://Scripts/Battle/ActorCompDamageNumber.cs" id="1_76o1j"]
+[ext_resource type="PackedScene" uid="uid://c2pak0cw4nqvr" path="res://Prefabs/EffectDamageNumber.tscn" id="2_6igy8"]
+
+[node name="ActorCompDamageNumber" type="Node2D"]
+script = ExtResource("1_76o1j")
+_effectDamageNumberPrefab = ExtResource("2_6igy8")

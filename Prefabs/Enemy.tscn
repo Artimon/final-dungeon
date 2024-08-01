@@ -1,11 +1,28 @@
-[gd_scene load_steps=12 format=3 uid="uid://okicl14ya4ii"]
+[gd_scene load_steps=13 format=3 uid="uid://okicl14ya4ii"]
 
 [ext_resource type="Script" path="res://Scripts/Battle/ActorEnemy.cs" id="1_idx4y"]
 [ext_resource type="Resource" uid="uid://bfdjwgsbxrfxp" path="res://Configs/Test Enemy 1.tres" id="2_dmrhw"]
-[ext_resource type="Material" uid="uid://b8v57evrlvoyr" path="res://Materials/MobAction.tres" id="3_h1ac7"]
+[ext_resource type="Material" uid="uid://b4sgr7lwgt77x" path="res://Materials/MobAction.tres" id="3_h1ac7"]
 [ext_resource type="Texture2D" uid="uid://c8rjrubxfsq6q" path="res://Images/Enemies/TestEnemy2.png" id="3_u6fg3"]
 [ext_resource type="PackedScene" uid="uid://clj1uq1my50s8" path="res://Prefabs/Target Marker.tscn" id="4_7my7p"]
 [ext_resource type="Material" uid="uid://c32tdyrmbhjbd" path="res://Materials/MobDeath.tres" id="5_gde36"]
+[ext_resource type="PackedScene" uid="uid://cw7f3nfmkj42j" path="res://Prefabs/ActorCompDamageNumber.tscn" id="7_cmm3x"]
+
+[sub_resource type="Animation" id="Animation_ubaju"]
+resource_name = "Action"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display Node2D/Enemy Sprite2D:material:shader_parameter/Flash")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1.0, null, 1.0, null]
+}
 
 [sub_resource type="Animation" id="Animation_clrqq"]
 resource_name = "Death"
@@ -77,22 +94,6 @@ tracks/2/keys = {
 "values": [null]
 }
 
-[sub_resource type="Animation" id="Animation_ubaju"]
-resource_name = "Action"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Display Node2D/Enemy Sprite2D:material:shader_parameter/Flash")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [1.0, null, 1.0, null]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ijv7m"]
 _data = {
 "Action": SubResource("Animation_ubaju"),
@@ -101,11 +102,12 @@ _data = {
 "RESET": SubResource("Animation_xmsqv")
 }
 
-[node name="Enemy" type="Node2D" node_paths=PackedStringArray("_sprite", "_animationPlayer", "_targetMarker")]
+[node name="Enemy" type="Node2D" node_paths=PackedStringArray("_sprite", "_animationPlayer", "_damageNumber", "_targetMarker")]
 script = ExtResource("1_idx4y")
 _setup = ExtResource("2_dmrhw")
 _sprite = NodePath("Display Node2D/Enemy Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
+_damageNumber = NodePath("Display Node2D/ActorCompDamageNumber")
 _actionMaterial = ExtResource("3_h1ac7")
 _deathMaterial = ExtResource("5_gde36")
 _targetMarker = NodePath("Display Node2D/Target Marker")
@@ -118,6 +120,9 @@ texture = ExtResource("3_u6fg3")
 
 [node name="Target Marker" parent="Display Node2D" instance=ExtResource("4_7my7p")]
 position = Vector2(0, -54)
+
+[node name="ActorCompDamageNumber" parent="Display Node2D" instance=ExtResource("7_cmm3x")]
+position = Vector2(0, -32)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

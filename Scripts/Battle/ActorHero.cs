@@ -17,6 +17,9 @@ public partial class ActorHero : ActorBase {
 	public AnimatedSprite2D animatedSprite;
 
 	[Export]
+	public ActorCompDamageNumber _damageNumber;
+
+	[Export]
 	public AudioStreamPlayer jumpAudio;
 
 	[Export]
@@ -47,6 +50,8 @@ public partial class ActorHero : ActorBase {
 
 	public override void ApplyDamage(float damage) {
 		_hits -= damage;
+		_damageNumber.Show(damage);
+
 		_status.SetHits(_hits, _maxHits);
 	}
 

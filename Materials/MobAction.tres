@@ -1,6 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b8v57evrlvoyr"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b4sgr7lwgt77x"]
 
-[ext_resource type="Shader" uid="uid://bwfuhcjqjhar" path="res://Shaders/MobAction.tres" id="1_o5bm0"]
+[ext_resource type="Shader" uid="uid://dqysqpgo4bm3v" path="res://Shaders/MobAction.tres" id="1_o5bm0"]
 
 [resource]
 resource_local_to_scene = true

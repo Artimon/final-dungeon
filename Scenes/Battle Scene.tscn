@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=3 uid="uid://dcs3bu26h6v10"]
+[gd_scene load_steps=96 format=3 uid="uid://dcs3bu26h6v10"]
 
 [ext_resource type="AudioStream" uid="uid://h36cq2vy7oof" path="res://Audio/Bottomless Abyss.mp3" id="1_2fmiq"]
 [ext_resource type="Theme" uid="uid://dot4j2g5m155i" path="res://Images/Config/MainTheme.tres" id="1_reoa1"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://cknmgdbujrqig" path="res://Images/Characters/Terra Jump.png" id="15_145i0"]
 [ext_resource type="Texture2D" uid="uid://ccievnaqdo8eu" path="res://Images/Characters/Terra Slash.png" id="16_vtri0"]
 [ext_resource type="PackedScene" uid="uid://okicl14ya4ii" path="res://Prefabs/Enemy.tscn" id="17_pxx0v"]
+[ext_resource type="PackedScene" uid="uid://cw7f3nfmkj42j" path="res://Prefabs/ActorCompDamageNumber.tscn" id="19_3ou5a"]
 [ext_resource type="Texture2D" uid="uid://b74cgb78bo6tm" path="res://Images/Weapons/FrostDagger.png" id="19_gnq8j"]
 [ext_resource type="Script" path="res://Scripts/Battle/Weapon.cs" id="19_xicdr"]
 [ext_resource type="Texture2D" uid="uid://cggb1efd64aq7" path="res://Images/Effects/WeaponSlash.png" id="20_8w2b2"]
@@ -135,6 +136,9 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(0, -16), Vector2(0, -16), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_3dc5w"]
+resource_name = "Jump"
+
 [sub_resource type="Animation" id="Animation_7xvln"]
 length = 0.001
 tracks/0/type = "value"
@@ -149,9 +153,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(0, 0)]
 }
-
-[sub_resource type="Animation" id="Animation_3dc5w"]
-resource_name = "Jump"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0agf6"]
 _data = {
@@ -1687,13 +1688,14 @@ texture = ExtResource("2_wlsai")
 [node name="Actor Container" type="Node2D" parent="Background Sprite2D"]
 y_sort_enabled = true
 
-[node name="Hero Terra" type="Node2D" parent="Background Sprite2D/Actor Container" node_paths=PackedStringArray("display", "_status", "animationPlayer", "animatedSprite", "jumpAudio", "weapon", "_targetMarker")]
+[node name="Hero Terra" type="Node2D" parent="Background Sprite2D/Actor Container" node_paths=PackedStringArray("display", "_status", "animationPlayer", "animatedSprite", "_damageNumber", "jumpAudio", "weapon", "_targetMarker")]
 position = Vector2(0, 56)
 script = ExtResource("3_vgpgq")
 display = NodePath("Display Node2D")
 _status = NodePath("../../../CanvasLayer/ElementHeroStatus Terra")
 animationPlayer = NodePath("AnimationPlayer")
 animatedSprite = NodePath("Display Node2D/Hero AnimatedSprite2D")
+_damageNumber = NodePath("Display Node2D/ActorCompDamageNumber")
 jumpAudio = NodePath("Jump AudioStreamPlayer")
 weapon = NodePath("Display Node2D/Weapon")
 _targetMarker = NodePath("Display Node2D/Target Marker")
@@ -1708,6 +1710,9 @@ autoplay = "default"
 
 [node name="Target Marker" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D" instance=ExtResource("13_f2rsc")]
 position = Vector2(0, -30)
+
+[node name="ActorCompDamageNumber" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D" instance=ExtResource("19_3ou5a")]
+position = Vector2(0, -16)
 
 [node name="Weapon" type="Node2D" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D" node_paths=PackedStringArray("_effectSprite", "_hitAudio")]
 script = ExtResource("19_xicdr")
