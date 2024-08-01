@@ -75,10 +75,13 @@ public abstract partial class ActorBase : Node2D {
 
 	public abstract void OnActionReady();
 
-	public void ResetAction() {
+	public void ResetAction(bool resetCooldown = true) {
 		_action = null;
-		_actionCooldown = 0d;
 		_lockActionTime = false;
+
+		if (resetCooldown) {
+			_actionCooldown = 0d;
+		}
 
 		OnActionUpdate();
 	}

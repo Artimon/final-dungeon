@@ -32,10 +32,16 @@ public partial class ActorHero : ActorBase {
 		_actionCooldown = (GD.Randf() + GD.Randf()) / 2d;
 
 		_status.SetHits(_hits, _maxHits);
+
+		animationPlayer.AnimationFinished += OnAnimationFinished;
+	}
+
+	public void OnAnimationFinished(StringName name) {
+		_action?.animation.OnAnimationFinished(name);
 	}
 
 	public override void _OnProcess(double delta) {
-		_action?.animation.Process(delta);
+		_action?.animation.OnProcess(delta);
 	}
 
 	public override bool TryBeginAction(Action action) {
@@ -53,12 +59,21 @@ public partial class ActorHero : ActorBase {
 		_damageNumber.Show(damage);
 
 		_status.SetHits(_hits, _maxHits);
+
+		if (IsDead) {
+			return;
+		}
+
+		_action = new Action {
+			animation = new HitAnimation(this)
+		};
+		_action.animation.OnEnter();
 	}
 
-	public void ActionFinished() {
+	public void ActionFinished(bool resetCooldown = true) {
 		animatedSprite.Play("default");
 
-		ResetAction();
+		ResetAction(resetCooldown);
 	}
 
 	public override void OnActionUpdate() {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=3 uid="uid://dcs3bu26h6v10"]
+[gd_scene load_steps=97 format=3 uid="uid://dcs3bu26h6v10"]
 
 [ext_resource type="AudioStream" uid="uid://h36cq2vy7oof" path="res://Audio/Bottomless Abyss.mp3" id="1_2fmiq"]
 [ext_resource type="Theme" uid="uid://dot4j2g5m155i" path="res://Images/Config/MainTheme.tres" id="1_reoa1"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://Scripts/Battle/UserInterface/ComponentActionMenu.cs" id="8_rckm0"]
 [ext_resource type="AudioStream" uid="uid://dwsbn3he0bkid" path="res://Audio/ui_menu_button_click_19.wav" id="10_8aifh"]
 [ext_resource type="PackedScene" uid="uid://clj1uq1my50s8" path="res://Prefabs/Target Marker.tscn" id="13_f2rsc"]
+[ext_resource type="Texture2D" uid="uid://buq2gfmeew8md" path="res://Images/Characters/Terra Hit.png" id="15_8csfh"]
 [ext_resource type="Texture2D" uid="uid://cknmgdbujrqig" path="res://Images/Characters/Terra Jump.png" id="15_145i0"]
 [ext_resource type="Texture2D" uid="uid://ccievnaqdo8eu" path="res://Images/Characters/Terra Slash.png" id="16_vtri0"]
 [ext_resource type="PackedScene" uid="uid://okicl14ya4ii" path="res://Prefabs/Enemy.tscn" id="17_pxx0v"]
@@ -30,6 +31,10 @@
 font_size = 8
 outline_size = 3
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8m564"]
+atlas = ExtResource("15_8csfh")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gx1m5"]
 atlas = ExtResource("15_145i0")
@@ -57,6 +62,14 @@ region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f6fdk"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8m564")
+}],
+"loop": true,
+"name": &"Hit",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gx1m5")
@@ -120,25 +133,6 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="Animation" id="Animation_e6frh"]
-resource_name = "Attack"
-length = 1.35
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Display Node2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.35, 1, 1.35),
-"transitions": PackedFloat32Array(-2, 1, -2, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -16), Vector2(0, -16), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_3dc5w"]
-resource_name = "Jump"
-
 [sub_resource type="Animation" id="Animation_7xvln"]
 length = 0.001
 tracks/0/type = "value"
@@ -154,10 +148,25 @@ tracks/0/keys = {
 "values": [Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_5tjwy"]
+resource_name = "Hit"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(0, 3), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0agf6"]
 _data = {
-"Attack": SubResource("Animation_e6frh"),
-"Jump": SubResource("Animation_3dc5w"),
+"Hit": SubResource("Animation_5tjwy"),
 "RESET": SubResource("Animation_7xvln")
 }
 
@@ -1695,7 +1704,7 @@ display = NodePath("Display Node2D")
 _status = NodePath("../../../CanvasLayer/ElementHeroStatus Terra")
 animationPlayer = NodePath("AnimationPlayer")
 animatedSprite = NodePath("Display Node2D/Hero AnimatedSprite2D")
-_damageNumber = NodePath("Display Node2D/ActorCompDamageNumber")
+_damageNumber = NodePath("ActorCompDamageNumber")
 jumpAudio = NodePath("Jump AudioStreamPlayer")
 weapon = NodePath("Display Node2D/Weapon")
 _targetMarker = NodePath("Display Node2D/Target Marker")
@@ -1705,14 +1714,10 @@ _targetMarker = NodePath("Display Node2D/Target Marker")
 [node name="Hero AnimatedSprite2D" type="AnimatedSprite2D" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D"]
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_f6fdk")
-animation = &"Slash"
 autoplay = "default"
 
 [node name="Target Marker" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D" instance=ExtResource("13_f2rsc")]
 position = Vector2(0, -30)
-
-[node name="ActorCompDamageNumber" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D" instance=ExtResource("19_3ou5a")]
-position = Vector2(0, -16)
 
 [node name="Weapon" type="Node2D" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D" node_paths=PackedStringArray("_effectSprite", "_hitAudio")]
 script = ExtResource("19_xicdr")
@@ -1732,6 +1737,9 @@ frame_progress = 1.0
 [node name="Hit AudioStreamPlayer" type="AudioStreamPlayer" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D/Weapon"]
 stream = ExtResource("22_bxmxd")
 volume_db = -20.0
+
+[node name="ActorCompDamageNumber" parent="Background Sprite2D/Actor Container/Hero Terra" instance=ExtResource("19_3ou5a")]
+position = Vector2(0, -16)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Background Sprite2D/Actor Container/Hero Terra"]
 libraries = {

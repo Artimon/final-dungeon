@@ -1,5 +1,11 @@
-﻿namespace FinalDungeon.Battle;
+﻿using Godot;
+
+namespace FinalDungeon.Battle;
 
 public interface IAnimation {
-	void Process(double delta);
+	public void OnEnter();
+
+	void OnProcess(double delta);
+
+	void OnAnimationFinished(StringName name);
 }

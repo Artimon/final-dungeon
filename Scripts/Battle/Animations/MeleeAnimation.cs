@@ -38,6 +38,8 @@ public class MeleeAnimation : IAnimation {
 		_UpdateActorDirection();
 	}
 
+	public void OnEnter() { }
+
 	public void _UpdateActorDirection() {
 		var direction = _startPosition - _targetPosition;
 		var scaleX = Mathf.Sign(direction.X);
@@ -45,7 +47,7 @@ public class MeleeAnimation : IAnimation {
 		_actor.display.Scale = new Vector2(scaleX, 1);
 	}
 
-	public void Process(double delta) {
+	public void OnProcess(double delta) {
 		switch (_state) {
 			case AnimationState.JumpToTarget:
 				_ProcessJumpToTarget(delta);
@@ -106,4 +108,6 @@ public class MeleeAnimation : IAnimation {
 
 		_UpdateActorDirection();
 	}
+
+	public void OnAnimationFinished(StringName _) { }
 }
