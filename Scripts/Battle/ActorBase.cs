@@ -8,11 +8,15 @@ public abstract partial class ActorBase : Node2D {
 	public float _maxHits;
 
 	public bool isEnemy;
+	public bool isInvulnerable;
 
 	public bool _lockActionTime;
 
 	public double _actionDuration;
 	public double _actionCooldown; // 0...1
+
+	[Export]
+	public StateMachine stateMachine;
 
 	/**
 	 * The current action that the actor is performing.

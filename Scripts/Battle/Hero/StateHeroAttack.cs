@@ -1,8 +1,10 @@
-﻿using Godot;
+﻿using System.Linq;
+using Godot;
 
 namespace FinalDungeon.Battle;
 
-public class MeleeAnimation : IAnimation {
+[GlobalClass]
+public partial class StateHeroAttack : StateBase {
 	public const float AttackDuration = 0.5f;
 	public const float JumpDuration = 0.5f;
 	public const float JumpHeight = 50;
@@ -15,6 +17,7 @@ public class MeleeAnimation : IAnimation {
 
 	public AnimationState _state;
 
+	[Export]
 	public ActorHero _actor;
 	public ActorBase _targetActor;
 	public Action _action;
@@ -23,31 +26,34 @@ public class MeleeAnimation : IAnimation {
 	public Vector2 _targetPosition;
 	public float _elapsedTime;
 
-	public MeleeAnimation(ActorHero actor, ActorBase targetActor, Action action) {
-		_actor = actor;
-		_targetActor = targetActor;
-		_action = action;
+	public override string StateName => "Attack";
+
+	public override void OnEnter() {
+		_actor._lockActionTime = true;
+
+		_action = _actor._action;
+		_targetActor = _action.targetActors.FirstOrDefault();
+
+		if (_targetActor == null) {
+			_actor.ActionFinished(false);
+			_stateMachine.TryEnter("Idle");
+
+			return;
+		}
 
 		_startPosition = _actor.display.GlobalPosition;
 		_targetPosition = _targetActor.GlobalPosition;
 
 		_state = AnimationState.JumpToTarget;
+
 		_actor.animatedSprite.Play("Jump");
 		_actor.jumpAudio.Play();
+		_actor.isInvulnerable = true;
 
 		_UpdateActorDirection();
 	}
 
-	public void OnEnter() { }
-
-	public void _UpdateActorDirection() {
-		var direction = _startPosition - _targetPosition;
-		var scaleX = Mathf.Sign(direction.X);
-
-		_actor.display.Scale = new Vector2(scaleX, 1);
-	}
-
-	public void OnProcess(double delta) {
+	public override void OnProcess(double delta) {
 		switch (_state) {
 			case AnimationState.JumpToTarget:
 				_ProcessJumpToTarget(delta);
@@ -61,6 +67,17 @@ public class MeleeAnimation : IAnimation {
 				_ProcessJumpToTarget(delta);
 				break;
 		}
+	}
+
+	public override void OnExit() {
+		_actor.isInvulnerable = false;
+	}
+
+	public void _UpdateActorDirection() {
+		var direction = _startPosition - _targetPosition;
+		var scaleX = Mathf.Sign(direction.X);
+
+		_actor.display.Scale = new Vector2(scaleX, 1);
 	}
 
 	public void _ProcessJumpToTarget(double delta) {
@@ -78,6 +95,7 @@ public class MeleeAnimation : IAnimation {
 		_elapsedTime = 0f;
 
 		if (_state == AnimationState.JumpBack) {
+			_stateMachine.TryEnter("Idle");
 			_actor.ActionFinished();
 
 			return;
@@ -108,6 +126,4 @@ public class MeleeAnimation : IAnimation {
 
 		_UpdateActorDirection();
 	}
-
-	public void OnAnimationFinished(StringName _) { }
 }

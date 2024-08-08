@@ -16,8 +16,8 @@ public partial class ElementHeroStatus : Control {
 	public void SetHits(float hits, float maxHits) {
 		_hitsProgress.Value = hits / (double)maxHits;
 
-		var hitsDisplay = Mathf.FloorToInt(hits);
-		var hitsText = Mathf.Max(1, hitsDisplay).ToString();
+		var hitsDisplay = Mathf.CeilToInt(hits);
+		var hitsText = Mathf.Max(0, hitsDisplay).ToString();
 
 		_hitsLabel.Text = hitsText;
 	}

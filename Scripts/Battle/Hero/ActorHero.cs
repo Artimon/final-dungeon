@@ -26,22 +26,12 @@ public partial class ActorHero : ActorBase {
 	public Weapon weapon;
 
 	public override void _Ready() {
-		_hits = 713f;
+		_hits = 23f;
 		_maxHits = 978f;
 		_actionDuration = 5d;
 		_actionCooldown = (GD.Randf() + GD.Randf()) / 2d;
 
 		_status.SetHits(_hits, _maxHits);
-
-		animationPlayer.AnimationFinished += OnAnimationFinished;
-	}
-
-	public void OnAnimationFinished(StringName name) {
-		_action?.animation.OnAnimationFinished(name);
-	}
-
-	public override void _OnProcess(double delta) {
-		_action?.animation.OnProcess(delta);
 	}
 
 	public override bool TryBeginAction(Action action) {
@@ -50,29 +40,35 @@ public partial class ActorHero : ActorBase {
 		}
 
 		_action = action;
+		_action.TryBeginAction(this);
 
 		return true;
 	}
 
 	public override void ApplyDamage(float damage) {
+		if (isInvulnerable) {
+			return;
+		}
+
 		_hits -= damage;
 		_damageNumber.Show(damage);
 
 		_status.SetHits(_hits, _maxHits);
 
 		if (IsDead) {
+			_lockActionTime = true;
+			_actionCooldown = 0d;
+			_status.SetAtb(_actionCooldown);
+
+			stateMachine.Force("Die");
+
 			return;
 		}
 
-		_action = new Action {
-			animation = new HitAnimation(this)
-		};
-		_action.animation.OnEnter();
+		stateMachine.Force("Hit");
 	}
 
 	public void ActionFinished(bool resetCooldown = true) {
-		animatedSprite.Play("default");
-
 		ResetAction(resetCooldown);
 	}
 

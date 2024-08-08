@@ -108,7 +108,6 @@ public partial class ComponentActionMenu : Control {
 		var action = _preflightAction;
 
 		action.targetActors = ControllerActors.instance.Targeted.ToArray();
-		action.animation = new MeleeAnimation(_actor, action.targetActors[0], action);
 
 		_lastTargetedActors = action.targetActors;
 		_preflightAction = default;
