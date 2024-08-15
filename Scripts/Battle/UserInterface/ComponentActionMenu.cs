@@ -64,7 +64,7 @@ public partial class ComponentActionMenu : Control {
 		Show();
 	}
 
-	public void UntargetAllActors() {
+	public void _UntargetAllActors() {
 		foreach (var actor in ControllerActors.instance.Actors) {
 			actor.Untarget();
 		}
@@ -107,12 +107,61 @@ public partial class ComponentActionMenu : Control {
 		return true;
 	}
 
+	public void _TrySwap(InputEvent @event) {
+		if (@event.IsActionPressed("Prev")) {
+			TrySwap(-1);
+		}
+		else if (@event.IsActionPressed("Next")) {
+			TrySwap(1);
+		}
+	}
+
+	public bool TrySwap(int direction) {
+		if (_actors.Count == 0) {
+			return false;
+		}
+
+		var actor = _currentActor;
+
+		var heroes = ControllerActors.instance.Heroes.ToList();
+		while (true) {
+			var currentIndex = heroes.IndexOf(actor);
+			var nextIndex = Mathf.Abs((currentIndex + direction) % heroes.Count);
+
+			actor = (ActorHero)heroes[nextIndex];
+
+			if (_actors.Contains(actor)) {
+				break;
+			}
+		}
+
+		_preflightAction = null;
+
+		/* Begin ugly part to swap the current actor. */
+		var tempList = _actors.ToList();
+		tempList.Remove(actor);
+		_actors.Clear();
+
+		foreach (var remainingActor in tempList) {
+			_actors.Enqueue(remainingActor);
+		}
+
+		_actors.Enqueue(_currentActor);
+		_currentActor = null;
+		/* End ugly part to swap the current actor. */
+
+		_UntargetAllActors();
+		_Begin(actor);
+
+		return true;
+	}
+
 	public void _BeginTargetSelect(Action.ActionTypes actionType) {
 		Hide();
 
 		_inputAudio.Play();
 
-		UntargetAllActors();
+		_UntargetAllActors();
 		_GetTargetEnemy().Target();
 
 		_preflightAction = new Action {
@@ -125,7 +174,7 @@ public partial class ComponentActionMenu : Control {
 			return;
 		}
 
-		UntargetAllActors();
+		_UntargetAllActors();
 		_GetTargetEnemy().Target();
 	}
 
@@ -149,7 +198,7 @@ public partial class ComponentActionMenu : Control {
 		_lastTargetedActors = action.targetActors;
 		_preflightAction = default;
 
-		UntargetAllActors();
+		_UntargetAllActors();
 
 		// @TODO Change to queue action, to wait for hit animation(s) to finish.
 		_currentActor.TryBeginAction(action);
@@ -202,12 +251,13 @@ public partial class ComponentActionMenu : Control {
 			return;
 		}
 
-		UntargetAllActors();
+		_UntargetAllActors();
 		nextTarget.Target();
 	}
 
 	public override void _Input(InputEvent @event) {
 		_TryConfirm(@event);
 		_TrySelect(@event);
+		_TrySwap(@event);
 	}
 }
