@@ -1,0 +1,246 @@
+[gd_scene load_steps=35 format=3 uid="uid://boqe37txgrnq4"]
+
+[ext_resource type="Script" path="res://Scripts/Battle/Hero/ActorHero.cs" id="1_3ev8g"]
+[ext_resource type="Texture2D" uid="uid://ce6mdjfhbuf3y" path="res://Images/Characters/Terra Ko.png" id="2_japdb"]
+[ext_resource type="Texture2D" uid="uid://buq2gfmeew8md" path="res://Images/Characters/Terra Hit.png" id="3_6yug1"]
+[ext_resource type="Texture2D" uid="uid://cknmgdbujrqig" path="res://Images/Characters/Terra Jump.png" id="4_ly54p"]
+[ext_resource type="Texture2D" uid="uid://ccievnaqdo8eu" path="res://Images/Characters/Terra Slash.png" id="5_v5y28"]
+[ext_resource type="Texture2D" uid="uid://ddq43x8r1c2h8" path="res://Images/Characters/Terra Walk North.png" id="6_rok60"]
+[ext_resource type="PackedScene" uid="uid://clj1uq1my50s8" path="res://Prefabs/Target Marker.tscn" id="7_x6gbh"]
+[ext_resource type="Script" path="res://Scripts/Battle/Weapon.cs" id="8_p4wxg"]
+[ext_resource type="Texture2D" uid="uid://b74cgb78bo6tm" path="res://Images/Weapons/FrostDagger.png" id="9_q7y4k"]
+[ext_resource type="Texture2D" uid="uid://cggb1efd64aq7" path="res://Images/Effects/WeaponSlash.png" id="10_qcb7b"]
+[ext_resource type="AudioStream" uid="uid://bngen7q3l5g0f" path="res://Audio/AttackHit.ogg" id="11_sn3xp"]
+[ext_resource type="PackedScene" uid="uid://cw7f3nfmkj42j" path="res://Prefabs/ActorCompDamageNumber.tscn" id="12_q6vk0"]
+[ext_resource type="AudioStream" uid="uid://dih5stxbw7uj1" path="res://Audio/Player Jump.wav" id="13_wvydo"]
+[ext_resource type="Script" path="res://Scripts/Battle/StateMachine/StateMachine.cs" id="14_tgtxr"]
+[ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroIdle.cs" id="15_d6mgk"]
+[ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroHit.cs" id="16_k3aab"]
+[ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroAttack.cs" id="17_3afcx"]
+[ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroDie.cs" id="18_eakqu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qk5e2"]
+atlas = ExtResource("2_japdb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8m564"]
+atlas = ExtResource("3_6yug1")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gx1m5"]
+atlas = ExtResource("4_ly54p")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tf7wn"]
+atlas = ExtResource("5_v5y28")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt47q"]
+atlas = ExtResource("6_rok60")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2h3wu"]
+atlas = ExtResource("6_rok60")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8jcl"]
+atlas = ExtResource("6_rok60")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1vyj"]
+atlas = ExtResource("6_rok60")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f6fdk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qk5e2")
+}],
+"loop": true,
+"name": &"Die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8m564")
+}],
+"loop": true,
+"name": &"Hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gx1m5")
+}],
+"loop": true,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tf7wn")
+}],
+"loop": true,
+"name": &"Slash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt47q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2h3wu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8jcl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1vyj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbvlr"]
+atlas = ExtResource("10_qcb7b")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yfjr"]
+atlas = ExtResource("10_qcb7b")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ce0ru"]
+atlas = ExtResource("10_qcb7b")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r0u7v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sbvlr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yfjr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ce0ru")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="Animation" id="Animation_5tjwy"]
+resource_name = "Hit"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(0, 3), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7xvln"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Display Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0agf6"]
+_data = {
+"Hit": SubResource("Animation_5tjwy"),
+"RESET": SubResource("Animation_7xvln")
+}
+
+[node name="HeroBase" type="Node2D" node_paths=PackedStringArray("display", "animationPlayer", "animatedSprite", "_damageNumber", "jumpAudio", "weapon", "stateMachine", "_targetMarker")]
+position = Vector2(0, 56)
+script = ExtResource("1_3ev8g")
+display = NodePath("Display Node2D")
+animationPlayer = NodePath("AnimationPlayer")
+animatedSprite = NodePath("Display Node2D/Hero AnimatedSprite2D")
+_damageNumber = NodePath("ActorCompDamageNumber")
+jumpAudio = NodePath("Jump AudioStreamPlayer")
+weapon = NodePath("Display Node2D/Weapon")
+stateMachine = NodePath("StateMachine")
+_targetMarker = NodePath("Display Node2D/Target Marker")
+
+[node name="Display Node2D" type="Node2D" parent="."]
+
+[node name="Hero AnimatedSprite2D" type="AnimatedSprite2D" parent="Display Node2D"]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_f6fdk")
+
+[node name="Target Marker" parent="Display Node2D" instance=ExtResource("7_x6gbh")]
+position = Vector2(0, -30)
+
+[node name="Weapon" type="Node2D" parent="Display Node2D" node_paths=PackedStringArray("_effectSprite", "_hitAudio")]
+script = ExtResource("8_p4wxg")
+_effectSprite = NodePath("Weapon Effect AnimatedSprite2D")
+_hitAudio = NodePath("Hit AudioStreamPlayer")
+
+[node name="Weapon Sprite2D" type="Sprite2D" parent="Display Node2D/Weapon"]
+position = Vector2(-18, -21.3878)
+texture = ExtResource("9_q7y4k")
+
+[node name="Weapon Effect AnimatedSprite2D" type="AnimatedSprite2D" parent="Display Node2D/Weapon"]
+position = Vector2(-8, -16.3878)
+sprite_frames = SubResource("SpriteFrames_r0u7v")
+frame = 2
+frame_progress = 1.0
+
+[node name="Hit AudioStreamPlayer" type="AudioStreamPlayer" parent="Display Node2D/Weapon"]
+stream = ExtResource("11_sn3xp")
+volume_db = -20.0
+
+[node name="ActorCompDamageNumber" parent="." instance=ExtResource("12_q6vk0")]
+position = Vector2(0, -16)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0agf6")
+}
+
+[node name="Jump AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_wvydo")
+volume_db = -20.0
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("14_tgtxr")
+
+[node name="StateHeroIdle" type="Node" parent="StateMachine" node_paths=PackedStringArray("_animatedSprite", "_stateMachine")]
+script = ExtResource("15_d6mgk")
+_animatedSprite = NodePath("../../Display Node2D/Hero AnimatedSprite2D")
+_stateMachine = NodePath("..")
+isDefault = true
+
+[node name="StateHeroHit" type="Node" parent="StateMachine" node_paths=PackedStringArray("_actor", "_stateMachine")]
+script = ExtResource("16_k3aab")
+_actor = NodePath("../..")
+_stateMachine = NodePath("..")
+
+[node name="StateHeroAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("_actor", "_stateMachine")]
+script = ExtResource("17_3afcx")
+_actor = NodePath("../..")
+_stateMachine = NodePath("..")
+
+[node name="StateHeroDie" type="Node" parent="StateMachine" node_paths=PackedStringArray("_actor", "_stateMachine")]
+script = ExtResource("18_eakqu")
+_actor = NodePath("../..")
+_stateMachine = NodePath("..")

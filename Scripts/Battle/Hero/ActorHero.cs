@@ -5,6 +5,9 @@ namespace FinalDungeon.Battle;
 
 public partial class ActorHero : ActorBase {
 	[Export]
+	public string name;
+
+	[Export]
 	public Node2D display;
 
 	[Export]
@@ -26,11 +29,12 @@ public partial class ActorHero : ActorBase {
 	public Weapon weapon;
 
 	public override void _Ready() {
-		_hits = 23f;
+		_hits = 713f;
 		_maxHits = 978f;
 		_actionDuration = 5d;
 		_actionCooldown = (GD.Randf() + GD.Randf()) / 2d;
 
+		_status.ShowName(name);
 		_status.SetHits(_hits, _maxHits);
 	}
 
@@ -55,6 +59,8 @@ public partial class ActorHero : ActorBase {
 
 		_status.SetHits(_hits, _maxHits);
 
+		TryRefreshTargeting();
+
 		if (IsDead) {
 			_lockActionTime = true;
 			_actionCooldown = 0d;
@@ -77,6 +83,6 @@ public partial class ActorHero : ActorBase {
 	}
 
 	public override void OnActionReady() {
-		ComponentActionMenu.instance.TryShow(this);
+		ComponentActionMenu.instance.Add(this);
 	}
 }

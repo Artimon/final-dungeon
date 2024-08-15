@@ -15,3 +15,14 @@ Spell	Attack	Defend
 
 "Gunblade" Funktion für etwas Geschick mit drin.
 Autoplay für alle außer Main Char?
+
+
+Was ist doof bei FF?
+- Mana Bedarf + Replrenishment ist tedious.
+- Items, Spell etc. in gigantischen Sub-Menüs zum auswählen.
+
+
+
+[Item -> SoM-Style "Heilkräuter" (Item-Reduktion)]
+Spells: "Black", "White", "Blue", "Red", Summon
+Pick 4 von z.B. "White": Heal, Cure, Resurrect, Barrier

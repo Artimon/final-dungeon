@@ -5,6 +5,9 @@ namespace FinalDungeon.Battle;
 [GlobalClass]
 public partial class ElementHeroStatus : Control {
 	[Export]
+	public Label _nameLabel;
+
+	[Export]
 	public TextureProgressBar _hitsProgress;
 
 	[Export]
@@ -12,6 +15,10 @@ public partial class ElementHeroStatus : Control {
 
 	[Export]
 	public TextureProgressBar _atbProgress;
+
+	public void ShowName(string name) {
+		_nameLabel.Text = name;
+	}
 
 	public void SetHits(float hits, float maxHits) {
 		_hitsProgress.Value = hits / (double)maxHits;

@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddi00ejv0lbu1"]
+
+[ext_resource type="PackedScene" uid="uid://boqe37txgrnq4" path="res://Prefabs/Heroes/HeroBase.tscn" id="1_ji0r6"]
+
+[node name="HeroTerra" instance=ExtResource("1_ji0r6")]

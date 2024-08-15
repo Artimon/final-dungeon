@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
@@ -20,7 +21,8 @@ public partial class ComponentActionMenu : Control {
 	[Export]
 	public AudioStreamPlayer _inputAudio;
 
-	public ActorHero _actor;
+	public ActorHero _currentActor;
+	public readonly Queue<ActorHero> _actors = new ();
 
 	public Action _preflightAction;
 
@@ -31,14 +33,35 @@ public partial class ComponentActionMenu : Control {
 	public override void _EnterTree() {
 		instance = this;
 
-		_attackIcon.Hide();
+		Hide();
 	}
 
-	public bool TryShow(ActorHero actor) {
-		_actor = actor;
-		_attackIcon.Show();
+	/**
+	 * Note: After being hit, the actor will call this method again, even if already queued.
+	 */
+	public void Add(ActorHero actor) {
+		if (_currentActor == null) {
+			_Begin(actor);
 
-		return true;
+			return;
+		}
+
+		if (_currentActor == actor) {
+			return;
+		}
+
+		if (_actors.Contains(actor)) {
+			return;
+		}
+
+		_actors.Enqueue(actor);
+	}
+
+	public void _Begin(ActorHero actor) {
+		_currentActor = actor;
+		_currentActor.Target(); // No need to untarget later, since confirm untargets all.
+
+		Show();
 	}
 
 	public void UntargetAllActors() {
@@ -52,8 +75,12 @@ public partial class ComponentActionMenu : Control {
 			return;
 		}
 
-		if (!_actor.IsReady) {
+		if (_currentActor == null) {
 			return;
+		}
+
+		if (!_currentActor.IsReady) {
+			return; // Maybe switch to next in queue.
 		}
 
 		if (_preflightAction != null) {
@@ -81,7 +108,8 @@ public partial class ComponentActionMenu : Control {
 	}
 
 	public void _BeginTargetSelect(Action.ActionTypes actionType) {
-		_attackIcon.Hide();
+		Hide();
+
 		_inputAudio.Play();
 
 		UntargetAllActors();
@@ -92,16 +120,25 @@ public partial class ComponentActionMenu : Control {
 		};
 	}
 
+	public void RefreshTargeting() {
+		if (!IsTargeting) {
+			return;
+		}
+
+		UntargetAllActors();
+		_GetTargetEnemy().Target();
+	}
+
 	private ActorBase _GetTargetEnemy() {
 		if (_lastTargetedActors.Length > 0) {
 			var enemy = _lastTargetedActors[0];
 
-			if (!enemy.IsDead) {
+			if (enemy.CanBeTargeted) {
 				return enemy;
 			}
 		}
 
-		return ControllerActors.instance.Enemies.First();
+		return ControllerActors.instance.Enemies.FirstOrDefault(actor => actor.CanBeTargeted);
 	}
 
 	public void _SubmitAction() {
@@ -114,8 +151,16 @@ public partial class ComponentActionMenu : Control {
 
 		UntargetAllActors();
 
-		_actor.TryBeginAction(action);
+		// @TODO Change to queue action, to wait for hit animation(s) to finish.
+		_currentActor.TryBeginAction(action);
+		_currentActor = null;
+
 		_inputAudio.Play();
+
+		var hasNext = _actors.TryDequeue(out var nextActor);
+		if (hasNext) {
+			_Begin(nextActor);
+		}
 	}
 
 	public void _SelectNextTarget(Direction direction) {
@@ -124,7 +169,10 @@ public partial class ComponentActionMenu : Control {
 			return;
 		}
 
-		var currentTarget = enemies.FirstOrDefault(actor => actor.IsTargeted);
+		var currentTarget =
+			enemies.FirstOrDefault(actor => actor.IsTargeted) ??
+			enemies.First();
+
 		var currentPosition = currentTarget.Position;
 
 		var nextTarget = (ActorBase)null;

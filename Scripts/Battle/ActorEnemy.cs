@@ -57,6 +57,7 @@ public partial class ActorEnemy : ActorBase {
 		_damageNumber.Show(damage);
 
 		UpdateTextureBasedOnHealth();
+		TryRefreshTargeting();
 
 		var isDead = TryDeath();
 		if (!isDead) {
@@ -95,7 +96,6 @@ public partial class ActorEnemy : ActorBase {
 	public void OnAnimationFinished(StringName animationName) {
 		switch (animationName) {
 			case "Action":
-				GD.Print("Action finished");
 				Attack();
 				ResetAction();
 				break;
@@ -112,7 +112,6 @@ public partial class ActorEnemy : ActorBase {
 
 	public override void OnActionReady() {
 		_sprite.Material = null;
-		GD.Print("Enemy Attack rdy");
 
 		TryBeginAction(null);
 	}

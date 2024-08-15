@@ -1,192 +1,18 @@
-[gd_scene load_steps=104 format=3 uid="uid://dcs3bu26h6v10"]
+[gd_scene load_steps=68 format=3 uid="uid://dcs3bu26h6v10"]
 
-[ext_resource type="AudioStream" uid="uid://h36cq2vy7oof" path="res://Audio/Bottomless Abyss.mp3" id="1_2fmiq"]
-[ext_resource type="Theme" uid="uid://dot4j2g5m155i" path="res://Images/Config/MainTheme.tres" id="1_reoa1"]
-[ext_resource type="Texture2D" uid="uid://dnsxpmanmt2vs" path="res://Images/AtbBarUnder.png" id="2_bne0p"]
+[ext_resource type="AudioStream" uid="uid://tngdgnmuotdi" path="res://Audio/battle-bgm.mp3" id="1_b4lxs"]
 [ext_resource type="Script" path="res://Scripts/Battle/Controllers/ControllerAtb.cs" id="2_nq46p"]
-[ext_resource type="Texture2D" uid="uid://dv15qcvpfh7qi" path="res://Images/HitsBarUnder.png" id="2_rce83"]
-[ext_resource type="Script" path="res://Scripts/Battle/UserInterface/ElementHeroStatus.cs" id="2_scsjx"]
 [ext_resource type="Script" path="res://Scripts/Battle/Controllers/ControllerActors.cs" id="2_stuf5"]
 [ext_resource type="Texture2D" uid="uid://btdp55btmqf7b" path="res://Images/Forest Background.png" id="2_wlsai"]
-[ext_resource type="Texture2D" uid="uid://blvesijpkf74y" path="res://Images/HitsBarProgress.png" id="3_hqbma"]
-[ext_resource type="Script" path="res://Scripts/Battle/Hero/ActorHero.cs" id="3_vgpgq"]
-[ext_resource type="Texture2D" uid="uid://ddq43x8r1c2h8" path="res://Images/Characters/Terra Walk North.png" id="4_4seot"]
-[ext_resource type="Texture2D" uid="uid://rrgbwvniop56" path="res://Images/AtbBarProgress.png" id="5_btpbr"]
+[ext_resource type="PackedScene" uid="uid://dj7uqfxwnchil" path="res://UserInterface/Elements/ElementHeroStatus.tscn" id="4_xlp1q"]
 [ext_resource type="Texture2D" uid="uid://dlejc4c2t0w2e" path="res://Images/UserInterface/Attack Icon.png" id="8_mhcs5"]
 [ext_resource type="Script" path="res://Scripts/Battle/UserInterface/ComponentActionMenu.cs" id="8_rckm0"]
 [ext_resource type="AudioStream" uid="uid://dwsbn3he0bkid" path="res://Audio/ui_menu_button_click_19.wav" id="10_8aifh"]
-[ext_resource type="PackedScene" uid="uid://clj1uq1my50s8" path="res://Prefabs/Target Marker.tscn" id="13_f2rsc"]
-[ext_resource type="Texture2D" uid="uid://ce6mdjfhbuf3y" path="res://Images/Characters/Terra Ko.png" id="15_3xdql"]
-[ext_resource type="Texture2D" uid="uid://buq2gfmeew8md" path="res://Images/Characters/Terra Hit.png" id="15_8csfh"]
-[ext_resource type="Texture2D" uid="uid://cknmgdbujrqig" path="res://Images/Characters/Terra Jump.png" id="15_145i0"]
-[ext_resource type="Texture2D" uid="uid://ccievnaqdo8eu" path="res://Images/Characters/Terra Slash.png" id="16_vtri0"]
+[ext_resource type="Texture2D" uid="uid://bc8t0ao2erpm4" path="res://Images/UserInterface/Cast Icon.png" id="12_1adwi"]
+[ext_resource type="PackedScene" uid="uid://b33d2bqc2oggc" path="res://Prefabs/Heroes/HeroCeles.tscn" id="12_o0gkh"]
+[ext_resource type="Texture2D" uid="uid://b6womvl0f1c0f" path="res://Images/UserInterface/Action Icon.png" id="13_hj0jn"]
+[ext_resource type="PackedScene" uid="uid://ddi00ejv0lbu1" path="res://Prefabs/Heroes/HeroTerra.tscn" id="16_ibpia"]
 [ext_resource type="PackedScene" uid="uid://okicl14ya4ii" path="res://Prefabs/Enemy.tscn" id="17_pxx0v"]
-[ext_resource type="PackedScene" uid="uid://cw7f3nfmkj42j" path="res://Prefabs/ActorCompDamageNumber.tscn" id="19_3ou5a"]
-[ext_resource type="Texture2D" uid="uid://b74cgb78bo6tm" path="res://Images/Weapons/FrostDagger.png" id="19_gnq8j"]
-[ext_resource type="Script" path="res://Scripts/Battle/Weapon.cs" id="19_xicdr"]
-[ext_resource type="Texture2D" uid="uid://cggb1efd64aq7" path="res://Images/Effects/WeaponSlash.png" id="20_8w2b2"]
-[ext_resource type="AudioStream" uid="uid://bngen7q3l5g0f" path="res://Audio/AttackHit.ogg" id="22_bxmxd"]
-[ext_resource type="AudioStream" uid="uid://dih5stxbw7uj1" path="res://Audio/Player Jump.wav" id="23_o4n2i"]
-[ext_resource type="Script" path="res://Scripts/Battle/StateMachine/StateMachine.cs" id="26_4us7g"]
-[ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroHit.cs" id="27_m80sd"]
-[ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroIdle.cs" id="27_wbevo"]
-[ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroAttack.cs" id="29_x23n1"]
-[ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroDie.cs" id="31_6xrdr"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_6k122"]
-font_size = 8
-outline_size = 3
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qk5e2"]
-atlas = ExtResource("15_3xdql")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8m564"]
-atlas = ExtResource("15_8csfh")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gx1m5"]
-atlas = ExtResource("15_145i0")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tf7wn"]
-atlas = ExtResource("16_vtri0")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dt47q"]
-atlas = ExtResource("4_4seot")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2h3wu"]
-atlas = ExtResource("4_4seot")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j8jcl"]
-atlas = ExtResource("4_4seot")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r1vyj"]
-atlas = ExtResource("4_4seot")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_f6fdk"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qk5e2")
-}],
-"loop": true,
-"name": &"Die",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8m564")
-}],
-"loop": true,
-"name": &"Hit",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gx1m5")
-}],
-"loop": true,
-"name": &"Jump",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tf7wn")
-}],
-"loop": true,
-"name": &"Slash",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dt47q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2h3wu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j8jcl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r1vyj")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sbvlr"]
-atlas = ExtResource("20_8w2b2")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6yfjr"]
-atlas = ExtResource("20_8w2b2")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ce0ru"]
-atlas = ExtResource("20_8w2b2")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_r0u7v"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sbvlr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6yfjr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ce0ru")
-}],
-"loop": false,
-"name": &"default",
-"speed": 12.0
-}]
-
-[sub_resource type="Animation" id="Animation_5tjwy"]
-resource_name = "Hit"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Display Node2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.133333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Vector2(0, 3), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_7xvln"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Display Node2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_0agf6"]
-_data = {
-"Hit": SubResource("Animation_5tjwy"),
-"RESET": SubResource("Animation_7xvln")
-}
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_li5j7"]
 expanded_output_ports = [0]
@@ -1608,7 +1434,7 @@ shader_parameter/Progress = 0.0
 [node name="Controllers" type="Node2D" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Controllers"]
-stream = ExtResource("1_2fmiq")
+stream = ExtResource("1_b4lxs")
 volume_db = -20.0
 autoplay = true
 
@@ -1620,78 +1446,26 @@ script = ExtResource("2_stuf5")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ElementHeroStatus Terra" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("_hitsProgress", "_hitsLabel", "_atbProgress")]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("2_scsjx")
-_hitsProgress = NodePath("Control/Hits Progress")
-_hitsLabel = NodePath("Control/Hits Label")
-_atbProgress = NodePath("Control/Atb Progress")
+[node name="ElementHeroStatus Terra" parent="CanvasLayer" instance=ExtResource("4_xlp1q")]
 
-[node name="Control" type="Control" parent="CanvasLayer/ElementHeroStatus Terra"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 169.0
-offset_top = 95.0
-offset_right = 279.0
-offset_bottom = 135.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = ExtResource("1_reoa1")
-
-[node name="Hits Progress" type="TextureProgressBar" parent="CanvasLayer/ElementHeroStatus Terra/Control"]
-layout_mode = 0
-offset_top = 7.0
-offset_right = 64.0
-offset_bottom = 11.0
-max_value = 1.0
-step = 0.001
-value = 0.5
-texture_under = ExtResource("2_rce83")
-texture_progress = ExtResource("3_hqbma")
-texture_progress_offset = Vector2(1, 1)
-
-[node name="Atb Progress" type="TextureProgressBar" parent="CanvasLayer/ElementHeroStatus Terra/Control"]
-layout_mode = 0
-offset_top = 10.0
-offset_right = 64.0
-offset_bottom = 14.0
-max_value = 1.0
-step = 0.001
-value = 0.5
-texture_under = ExtResource("2_bne0p")
-texture_progress = ExtResource("5_btpbr")
-texture_progress_offset = Vector2(1, 1)
-
-[node name="Name Label" type="Label" parent="CanvasLayer/ElementHeroStatus Terra/Control"]
-layout_mode = 0
-offset_right = 64.0
-offset_bottom = 10.0
-text = "Terra"
-label_settings = SubResource("LabelSettings_6k122")
-
-[node name="Hits Label" type="Label" parent="CanvasLayer/ElementHeroStatus Terra/Control"]
-layout_mode = 0
-offset_right = 64.0
-offset_bottom = 10.0
-text = "713"
-label_settings = SubResource("LabelSettings_6k122")
-horizontal_alignment = 2
+[node name="ElementHeroStatus Celes" parent="CanvasLayer" instance=ExtResource("4_xlp1q")]
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 48.0
+offset_bottom = 56.0
 
 [node name="ComponentActionMenu" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("_attackIcon", "_inputAudio")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 37.0
-offset_top = 110.0
+offset_top = 120.0
 offset_right = 37.0
-offset_bottom = 110.0
+offset_bottom = 120.0
 script = ExtResource("8_rckm0")
-_attackIcon = NodePath("TextureRect")
+_attackIcon = NodePath("Attack Icon TextureRect")
 _inputAudio = NodePath("AudioStreamPlayer")
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ComponentActionMenu"]
+[node name="Attack Icon TextureRect" type="TextureRect" parent="CanvasLayer/ComponentActionMenu"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -1701,6 +1475,42 @@ offset_right = 8.0
 offset_bottom = 16.0
 grow_horizontal = 2
 texture = ExtResource("8_mhcs5")
+
+[node name="Cast Icon TextureRect" type="TextureRect" parent="CanvasLayer/ComponentActionMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -21.0
+offset_top = -12.0
+offset_right = -5.0
+offset_bottom = 4.0
+grow_horizontal = 2
+texture = ExtResource("12_1adwi")
+
+[node name="Action Icon TextureRect" type="TextureRect" parent="CanvasLayer/ComponentActionMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_top = -23.0
+offset_right = 8.0
+offset_bottom = -7.0
+grow_horizontal = 2
+texture = ExtResource("13_hj0jn")
+
+[node name="Action Icon TextureRect2" type="TextureRect" parent="CanvasLayer/ComponentActionMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 5.0
+offset_top = -12.0
+offset_right = 21.0
+offset_bottom = 4.0
+grow_horizontal = 2
+texture = ExtResource("13_hj0jn")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/ComponentActionMenu"]
 stream = ExtResource("10_8aifh")
@@ -1715,82 +1525,15 @@ texture = ExtResource("2_wlsai")
 [node name="Actor Container" type="Node2D" parent="Background Sprite2D"]
 y_sort_enabled = true
 
-[node name="Hero Terra" type="Node2D" parent="Background Sprite2D/Actor Container" node_paths=PackedStringArray("display", "_status", "animationPlayer", "animatedSprite", "_damageNumber", "jumpAudio", "weapon", "stateMachine", "_targetMarker")]
-position = Vector2(0, 56)
-script = ExtResource("3_vgpgq")
-display = NodePath("Display Node2D")
+[node name="HeroTerra" parent="Background Sprite2D/Actor Container" node_paths=PackedStringArray("_status") instance=ExtResource("16_ibpia")]
+position = Vector2(-16, 56)
+name = "Terra"
 _status = NodePath("../../../CanvasLayer/ElementHeroStatus Terra")
-animationPlayer = NodePath("AnimationPlayer")
-animatedSprite = NodePath("Display Node2D/Hero AnimatedSprite2D")
-_damageNumber = NodePath("ActorCompDamageNumber")
-jumpAudio = NodePath("Jump AudioStreamPlayer")
-weapon = NodePath("Display Node2D/Weapon")
-stateMachine = NodePath("StateMachine")
-_targetMarker = NodePath("Display Node2D/Target Marker")
 
-[node name="Display Node2D" type="Node2D" parent="Background Sprite2D/Actor Container/Hero Terra"]
-
-[node name="Hero AnimatedSprite2D" type="AnimatedSprite2D" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D"]
-position = Vector2(0, -12)
-sprite_frames = SubResource("SpriteFrames_f6fdk")
-
-[node name="Target Marker" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D" instance=ExtResource("13_f2rsc")]
-position = Vector2(0, -30)
-
-[node name="Weapon" type="Node2D" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D" node_paths=PackedStringArray("_effectSprite", "_hitAudio")]
-script = ExtResource("19_xicdr")
-_effectSprite = NodePath("Weapon Effect AnimatedSprite2D")
-_hitAudio = NodePath("Hit AudioStreamPlayer")
-
-[node name="Weapon Sprite2D" type="Sprite2D" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D/Weapon"]
-position = Vector2(-18, -21.3878)
-texture = ExtResource("19_gnq8j")
-
-[node name="Weapon Effect AnimatedSprite2D" type="AnimatedSprite2D" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D/Weapon"]
-position = Vector2(-8, -16.3878)
-sprite_frames = SubResource("SpriteFrames_r0u7v")
-frame = 2
-frame_progress = 1.0
-
-[node name="Hit AudioStreamPlayer" type="AudioStreamPlayer" parent="Background Sprite2D/Actor Container/Hero Terra/Display Node2D/Weapon"]
-stream = ExtResource("22_bxmxd")
-volume_db = -20.0
-
-[node name="ActorCompDamageNumber" parent="Background Sprite2D/Actor Container/Hero Terra" instance=ExtResource("19_3ou5a")]
-position = Vector2(0, -16)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Background Sprite2D/Actor Container/Hero Terra"]
-libraries = {
-"": SubResource("AnimationLibrary_0agf6")
-}
-
-[node name="Jump AudioStreamPlayer" type="AudioStreamPlayer" parent="Background Sprite2D/Actor Container/Hero Terra"]
-stream = ExtResource("23_o4n2i")
-volume_db = -20.0
-
-[node name="StateMachine" type="Node" parent="Background Sprite2D/Actor Container/Hero Terra"]
-script = ExtResource("26_4us7g")
-
-[node name="StateHeroIdle" type="Node" parent="Background Sprite2D/Actor Container/Hero Terra/StateMachine" node_paths=PackedStringArray("_animatedSprite", "_stateMachine")]
-script = ExtResource("27_wbevo")
-_animatedSprite = NodePath("../../Display Node2D/Hero AnimatedSprite2D")
-_stateMachine = NodePath("..")
-isDefault = true
-
-[node name="StateHeroHit" type="Node" parent="Background Sprite2D/Actor Container/Hero Terra/StateMachine" node_paths=PackedStringArray("_actor", "_stateMachine")]
-script = ExtResource("27_m80sd")
-_actor = NodePath("../..")
-_stateMachine = NodePath("..")
-
-[node name="StateHeroAttack" type="Node" parent="Background Sprite2D/Actor Container/Hero Terra/StateMachine" node_paths=PackedStringArray("_actor", "_stateMachine")]
-script = ExtResource("29_x23n1")
-_actor = NodePath("../..")
-_stateMachine = NodePath("..")
-
-[node name="StateHeroDie" type="Node" parent="Background Sprite2D/Actor Container/Hero Terra/StateMachine" node_paths=PackedStringArray("_actor", "_stateMachine")]
-script = ExtResource("31_6xrdr")
-_actor = NodePath("../..")
-_stateMachine = NodePath("..")
+[node name="HeroCeles" parent="Background Sprite2D/Actor Container" node_paths=PackedStringArray("_status") instance=ExtResource("12_o0gkh")]
+position = Vector2(26, 56)
+name = "Celes"
+_status = NodePath("../../../CanvasLayer/ElementHeroStatus Celes")
 
 [node name="Enemy 1" parent="Background Sprite2D/Actor Container" instance=ExtResource("17_pxx0v")]
 position = Vector2(-29, 22)

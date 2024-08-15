@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using FinalDungeon.Battle.UserInterface;
+using Godot;
 
 namespace FinalDungeon.Battle;
 
@@ -30,6 +31,8 @@ public abstract partial class ActorBase : Node2D {
 	public bool IsReady => _action == null && _actionCooldown >= 1d;
 
 	public bool IsTargeted => _targetMarker.Visible;
+
+	public bool CanBeTargeted => !IsDead;
 
 	public bool IsDead => _hits <= 0;
 
@@ -69,6 +72,22 @@ public abstract partial class ActorBase : Node2D {
 
 	public void Untarget() {
 		_targetMarker.Hide();
+	}
+
+	public bool TryRefreshTargeting() {
+		if (!IsTargeted) {
+			return false;
+		}
+
+		if (CanBeTargeted) {
+			return false;
+		}
+
+		Untarget();
+
+		ComponentActionMenu.instance.RefreshTargeting();
+
+		return true;
 	}
 
 	public abstract bool TryBeginAction(Action action);
