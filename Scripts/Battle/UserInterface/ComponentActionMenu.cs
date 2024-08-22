@@ -30,8 +30,18 @@ public partial class ComponentActionMenu : Control {
 
 	public bool IsTargeting => _preflightAction != null;
 
+	public Func<InputEvent, bool>[] _inputHandlers;
+
 	public override void _EnterTree() {
 		instance = this;
+
+		_inputHandlers = new [] {
+			_TryAction,
+			_TryConfirm,
+			_TryCancel,
+			_TrySelect,
+			_TrySwap
+		};
 
 		Hide();
 	}
@@ -70,26 +80,78 @@ public partial class ComponentActionMenu : Control {
 		}
 	}
 
-	public void _TryConfirm(InputEvent @event) {
-		if (!@event.IsActionPressed("Confirm")) {
-			return;
+	public bool _TryGetActionType(InputEvent @event, out Action.ActionTypes actionType) {
+		if (@event.IsActionPressed("Bottom Action")) {
+			actionType = Action.ActionTypes.Attack;
+
+			return true;
+		}
+
+		if (@event.IsActionPressed("Left Action")) {
+			actionType = Action.ActionTypes.Cast;
+
+			return true;
+		}
+
+		actionType = default;
+
+		return false;
+	}
+
+	public bool _TryAction(InputEvent @event) {
+		if (IsTargeting) {
+			return false;
+		}
+
+		var hasAction = _TryGetActionType(@event, out var actionType);
+		if (!hasAction) {
+			return false;
 		}
 
 		if (_currentActor == null) {
-			return;
+			return false;
 		}
 
 		if (!_currentActor.IsReady) {
-			return; // Maybe switch to next in queue.
+			return false; // Maybe switch to next in queue.
 		}
 
-		if (_preflightAction != null) {
-			_SubmitAction();
+		_BeginTargetSelect(actionType);
 
-			return;
+		return true;
+	}
+
+	public bool _TryConfirm(InputEvent @event) {
+		if (!IsTargeting) {
+			return false;
 		}
 
-		_BeginTargetSelect(Action.ActionTypes.Attack);
+		if (!@event.IsActionPressed("Bottom Action")) {
+			return false;
+		}
+
+		_SubmitAction();
+
+		return true;
+	}
+
+	public bool _TryCancel(InputEvent @event) {
+		if (!IsTargeting) {
+			return false;
+		}
+
+		if (!@event.IsActionPressed("Right Action")) {
+			return false;
+		}
+
+		_preflightAction = default;
+
+		_UntargetAllActors();
+		_currentActor.Target();
+
+		Show();
+
+		return true;
 	}
 
 	public bool _TrySelect(InputEvent @event) {
@@ -107,13 +169,20 @@ public partial class ComponentActionMenu : Control {
 		return true;
 	}
 
-	public void _TrySwap(InputEvent @event) {
+	public bool _TrySwap(InputEvent @event) {
 		if (@event.IsActionPressed("Prev")) {
 			TrySwap(-1);
+
+			return true;
 		}
-		else if (@event.IsActionPressed("Next")) {
+
+		if (@event.IsActionPressed("Next")) {
 			TrySwap(1);
+
+			return true;
 		}
+
+		return false;
 	}
 
 	public bool TrySwap(int direction) {
@@ -256,8 +325,10 @@ public partial class ComponentActionMenu : Control {
 	}
 
 	public override void _Input(InputEvent @event) {
-		_TryConfirm(@event);
-		_TrySelect(@event);
-		_TrySwap(@event);
+		foreach (var inputHandler in _inputHandlers) {
+			if (inputHandler(@event)) {
+				break;
+			}
+		}
 	}
 }

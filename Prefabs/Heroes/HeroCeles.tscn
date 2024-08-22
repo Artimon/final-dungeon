@@ -1,11 +1,20 @@
-[gd_scene load_steps=16 format=3 uid="uid://b33d2bqc2oggc"]
+[gd_scene load_steps=19 format=3 uid="uid://b33d2bqc2oggc"]
 
 [ext_resource type="PackedScene" uid="uid://boqe37txgrnq4" path="res://Prefabs/Heroes/HeroBase.tscn" id="1_fqv6t"]
+[ext_resource type="Texture2D" uid="uid://djb0v5se57abm" path="res://Images/Characters/Celes Cast.png" id="2_dbe7o"]
 [ext_resource type="Texture2D" uid="uid://dkc72mk0g0hj0" path="res://Images/Characters/Celes Ko.png" id="2_yw8o0"]
 [ext_resource type="Texture2D" uid="uid://drtp1kips4rlq" path="res://Images/Characters/Celes Hit.png" id="3_jtb0d"]
 [ext_resource type="Texture2D" uid="uid://cqdt7aqgkjfqp" path="res://Images/Characters/Celes Jump.png" id="4_v30g6"]
 [ext_resource type="Texture2D" uid="uid://d1ucadnctkj1" path="res://Images/Characters/Celes Slash.png" id="5_pva7u"]
 [ext_resource type="Texture2D" uid="uid://dwg53c3fuog1l" path="res://Images/Characters/Celes Walk North.png" id="6_5dww8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pfql"]
+atlas = ExtResource("2_dbe7o")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7sabr"]
+atlas = ExtResource("2_dbe7o")
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pxrtq"]
 atlas = ExtResource("2_yw8o0")
@@ -43,9 +52,20 @@ region = Rect2(96, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pxrtq")
+"texture": SubResource("AtlasTexture_5pfql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7sabr")
 }],
 "loop": true,
+"name": &"Cast",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxrtq")
+}],
+"loop": false,
 "name": &"Die",
 "speed": 5.0
 }, {
@@ -53,7 +73,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_177vh")
 }],
-"loop": true,
+"loop": false,
 "name": &"Hit",
 "speed": 5.0
 }, {
@@ -61,7 +81,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_v1pk3")
 }],
-"loop": true,
+"loop": false,
 "name": &"Jump",
 "speed": 5.0
 }, {
@@ -69,7 +89,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3si5d")
 }],
-"loop": true,
+"loop": false,
 "name": &"Slash",
 "speed": 5.0
 }, {

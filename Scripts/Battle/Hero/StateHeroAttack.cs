@@ -29,9 +29,7 @@ public partial class StateHeroAttack : StateBase {
 	public override string StateName => "Attack";
 
 	public override void OnEnter() {
-		_actor._lockActionTime = true;
-
-		_action = _actor._action;
+		_action = _actor.Action;
 		_targetActor = _action.targetActors.FirstOrDefault();
 
 		if (_targetActor == null) {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://boqe37txgrnq4"]
+[gd_scene load_steps=36 format=3 uid="uid://boqe37txgrnq4"]
 
 [ext_resource type="Script" path="res://Scripts/Battle/Hero/ActorHero.cs" id="1_3ev8g"]
 [ext_resource type="Texture2D" uid="uid://ce6mdjfhbuf3y" path="res://Images/Characters/Terra Ko.png" id="2_japdb"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroHit.cs" id="16_k3aab"]
 [ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroAttack.cs" id="17_3afcx"]
 [ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroDie.cs" id="18_eakqu"]
+[ext_resource type="Script" path="res://Scripts/Battle/Hero/StateHeroCast.cs" id="19_mgyp1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qk5e2"]
 atlas = ExtResource("2_japdb")
@@ -53,11 +54,16 @@ region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f6fdk"]
 animations = [{
+"frames": [],
+"loop": true,
+"name": &"Cast",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qk5e2")
 }],
-"loop": true,
+"loop": false,
 "name": &"Die",
 "speed": 5.0
 }, {
@@ -65,7 +71,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8m564")
 }],
-"loop": true,
+"loop": false,
 "name": &"Hit",
 "speed": 5.0
 }, {
@@ -73,7 +79,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_gx1m5")
 }],
-"loop": true,
+"loop": false,
 "name": &"Jump",
 "speed": 5.0
 }, {
@@ -81,7 +87,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tf7wn")
 }],
-"loop": true,
+"loop": false,
 "name": &"Slash",
 "speed": 5.0
 }, {
@@ -196,11 +202,11 @@ _effectSprite = NodePath("Weapon Effect AnimatedSprite2D")
 _hitAudio = NodePath("Hit AudioStreamPlayer")
 
 [node name="Weapon Sprite2D" type="Sprite2D" parent="Display Node2D/Weapon"]
-position = Vector2(-18, -21.3878)
+position = Vector2(-18, -21)
 texture = ExtResource("9_q7y4k")
 
 [node name="Weapon Effect AnimatedSprite2D" type="AnimatedSprite2D" parent="Display Node2D/Weapon"]
-position = Vector2(-8, -16.3878)
+position = Vector2(-8, -16)
 sprite_frames = SubResource("SpriteFrames_r0u7v")
 frame = 2
 frame_progress = 1.0
@@ -244,3 +250,12 @@ _stateMachine = NodePath("..")
 script = ExtResource("18_eakqu")
 _actor = NodePath("../..")
 _stateMachine = NodePath("..")
+
+[node name="StateHeroCast" type="Node" parent="StateMachine" node_paths=PackedStringArray("_actor", "_castTimer", "_stateMachine")]
+script = ExtResource("19_mgyp1")
+_actor = NodePath("../..")
+_castTimer = NodePath("Timer")
+_stateMachine = NodePath("..")
+
+[node name="Timer" type="Timer" parent="StateMachine/StateHeroCast"]
+one_shot = true

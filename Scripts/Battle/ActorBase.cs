@@ -25,10 +25,14 @@ public abstract partial class ActorBase : Node2D {
 	 */
 	public Action _action;
 
+	public Action Action => _action;
+
 	[Export]
 	public AnimatedSprite2D _targetMarker;
 
 	public bool IsReady => _action == null && _actionCooldown >= 1d;
+
+	public bool IsActionTimeLocked => _lockActionTime || _action != null;
 
 	public bool IsTargeted => _targetMarker.Visible;
 
@@ -48,7 +52,7 @@ public abstract partial class ActorBase : Node2D {
 	public override void _Process(double delta) {
 		_OnProcess(delta);
 
-		if (_lockActionTime) {
+		if (IsActionTimeLocked) {
 			return;
 		}
 

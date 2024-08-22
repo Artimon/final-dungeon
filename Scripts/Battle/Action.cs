@@ -3,7 +3,8 @@
 public class Action {
 	// @TODO Convert to Resource actions.
 	public enum ActionTypes {
-		Attack
+		Attack,
+		Cast
 	}
 
 	public ActionTypes actionType;
@@ -20,6 +21,9 @@ public class Action {
 		switch (actionType) {
 			case ActionTypes.Attack:
 				return actor.stateMachine.TryEnter("Attack");
+
+			case ActionTypes.Cast:
+				return actor.stateMachine.TryEnter("Cast");
 
 			default:
 				return false;
