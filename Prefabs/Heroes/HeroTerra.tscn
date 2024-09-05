@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://ddi00ejv0lbu1"]
+[gd_scene load_steps=21 format=3 uid="uid://ddi00ejv0lbu1"]
 
 [ext_resource type="PackedScene" uid="uid://boqe37txgrnq4" path="res://Prefabs/Heroes/HeroBase.tscn" id="1_ji0r6"]
+[ext_resource type="Resource" uid="uid://d72yjx5k3aqu" path="res://Configs/AttackActionSetup.tres" id="2_24brs"]
 [ext_resource type="Resource" uid="uid://dfy7aj7g0rsgp" path="res://Configs/FireSpellActionSetup.tres" id="2_owm6o"]
 [ext_resource type="Texture2D" uid="uid://dlpahirx3soi1" path="res://Images/Characters/Terra Cast.png" id="2_umj1u"]
 [ext_resource type="Texture2D" uid="uid://ce6mdjfhbuf3y" path="res://Images/Characters/Terra Ko.png" id="3_q5337"]
@@ -113,7 +114,7 @@ animations = [{
 }]
 
 [node name="HeroTerra" instance=ExtResource("1_ji0r6")]
-actions = Array[Object]([ExtResource("2_owm6o")])
+actions = Array[Object]([ExtResource("2_24brs"), ExtResource("2_owm6o")])
 
 [node name="Hero AnimatedSprite2D" parent="Display Node2D" index="0"]
 sprite_frames = SubResource("SpriteFrames_y6e0i")

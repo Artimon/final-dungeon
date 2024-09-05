@@ -32,9 +32,12 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="FireSpell" type="Node2D" node_paths=PackedStringArray("animatedSprite")]
+[node name="FireSpell" type="Node2D" node_paths=PackedStringArray("_timer", "_animatedSprite")]
 script = ExtResource("1_e2008")
-animatedSprite = NodePath("AnimatedSprite2D")
+_timer = NodePath("Timer")
+_animatedSprite = NodePath("AnimatedSprite2D")
+
+[node name="Timer" type="Timer" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -48)

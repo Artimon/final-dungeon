@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ActionSetup" load_steps=3 format=3 uid="uid://d72yjx5k3aqu"]
+
+[ext_resource type="Script" path="res://Scripts/Battle/Config/ActionSetup.cs" id="1_3rrav"]
+[ext_resource type="Resource" uid="uid://de36xksjorckc" path="res://Configs/SingleTargetSelect.tres" id="2_836k4"]
+
+[resource]
+script = ExtResource("1_3rrav")
+power = 150.0
+castTime = 0.0
+targetSelect = ExtResource("2_836k4")

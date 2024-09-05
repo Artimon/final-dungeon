@@ -38,6 +38,18 @@ public partial class ControllerActors : Node {
 		return null;
 	}
 
+	public void TargetAllEnemies() {
+		foreach (var actor in Enemies) {
+			actor.Target();
+		}
+	}
+
+	public void UntargetAll() {
+		foreach (var actor in _actors) {
+			actor.Untarget();
+		}
+	}
+
 	public override void _ExitTree() {
 		_actors.Clear();
 	}

@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="SingleMultiTargetSelect" load_steps=2 format=3 uid="uid://d0i8fm4w5wann"]
+
+[ext_resource type="Script" path="res://Scripts/Battle/Config/SingleMultiTargetSelect.cs" id="1_pema3"]
+
+[resource]
+script = ExtResource("1_pema3")

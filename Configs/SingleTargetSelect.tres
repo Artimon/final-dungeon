@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="SingleTargetSelect" load_steps=2 format=3 uid="uid://de36xksjorckc"]
+
+[ext_resource type="Script" path="res://Scripts/Battle/Config/SingleTargetSelect.cs" id="1_nadsw"]
+
+[resource]
+script = ExtResource("1_nadsw")

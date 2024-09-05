@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="ActionSetup" load_steps=3 format=3 uid="uid://dfy7aj7g0rsgp"]
+[gd_resource type="Resource" script_class="ActionSetup" load_steps=4 format=3 uid="uid://dfy7aj7g0rsgp"]
 
 [ext_resource type="Script" path="res://Scripts/Battle/Config/ActionSetup.cs" id="1_lconx"]
 [ext_resource type="PackedScene" uid="uid://6kf5wb6svi41" path="res://Prefabs/Spells/FireSpell.tscn" id="2_yq4kp"]
+[ext_resource type="Resource" uid="uid://d0i8fm4w5wann" path="res://Configs/SingleMultiTargetSelect.tres" id="3_fk3rc"]
 
 [resource]
 script = ExtResource("1_lconx")
 singleTargetEffect = ExtResource("2_yq4kp")
 power = 100.0
 castTime = 2.5
+targetSelect = ExtResource("3_fk3rc")

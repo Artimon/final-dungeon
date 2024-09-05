@@ -7,12 +7,6 @@ namespace FinalDungeon.Battle.UserInterface;
 
 [GlobalClass]
 public partial class ComponentActionMenu : Control {
-	public enum Direction {
-		Left,
-		Right,
-		// Future directions can be added here, e.g., Up, Down
-	}
-
 	public static ComponentActionMenu instance;
 
 	[Export]
@@ -74,16 +68,11 @@ public partial class ComponentActionMenu : Control {
 		Show();
 	}
 
-	public void _UntargetAllActors() {
-		foreach (var actor in ControllerActors.instance.Actors) {
-			actor.Untarget();
-		}
-	}
-
 	public bool _TryGetAction(InputEvent @event, out Action action) {
 		if (@event.IsActionPressed("Bottom Action")) {
 			action = new Action {
-				type = Action.ActionTypes.Attack
+				type = Action.ActionTypes.Attack,
+				setup = _currentActor.actions[0]
 			};
 
 			return true;
@@ -92,7 +81,7 @@ public partial class ComponentActionMenu : Control {
 		if (@event.IsActionPressed("Left Action")) {
 			action = new Action {
 				type = Action.ActionTypes.Cast,
-				setup = _currentActor.actions[0]
+				setup = _currentActor.actions[1]
 			};
 
 			return true;
@@ -151,7 +140,7 @@ public partial class ComponentActionMenu : Control {
 
 		_preflightAction = default;
 
-		_UntargetAllActors();
+		ControllerActors.instance.UntargetAll();
 		_currentActor.Target();
 
 		Show();
@@ -164,12 +153,7 @@ public partial class ComponentActionMenu : Control {
 			return false;
 		}
 
-		if (@event.IsActionPressed("East")) {
-			_SelectNextTarget(Direction.Right);
-		}
-		else if (@event.IsActionPressed("West")) {
-			_SelectNextTarget(Direction.Left);
-		}
+		_preflightAction.setup.targetSelect.OnInputEvent(@event);
 
 		return true;
 	}
@@ -224,7 +208,7 @@ public partial class ComponentActionMenu : Control {
 		_currentActor = null;
 		/* End ugly part to swap the current actor. */
 
-		_UntargetAllActors();
+		ControllerActors.instance.UntargetAll();
 		_Begin(actor);
 
 		return true;
@@ -235,10 +219,8 @@ public partial class ComponentActionMenu : Control {
 
 		_inputAudio.Play();
 
-		_UntargetAllActors();
-		_GetTargetEnemy().Target();
-
 		_preflightAction = action;
+		_preflightAction.setup.targetSelect.Begin(_lastTargetedActors);
 	}
 
 	public void RefreshTargeting() {
@@ -246,20 +228,7 @@ public partial class ComponentActionMenu : Control {
 			return;
 		}
 
-		_UntargetAllActors();
-		_GetTargetEnemy().Target();
-	}
-
-	private ActorBase _GetTargetEnemy() {
-		if (_lastTargetedActors.Length > 0) {
-			var enemy = _lastTargetedActors[0];
-
-			if (enemy.CanBeTargeted) {
-				return enemy;
-			}
-		}
-
-		return ControllerActors.instance.Enemies.FirstOrDefault(actor => actor.CanBeTargeted);
+		_preflightAction.setup.targetSelect.Begin(_lastTargetedActors);
 	}
 
 	public void _SubmitAction() {
@@ -270,7 +239,7 @@ public partial class ComponentActionMenu : Control {
 		_lastTargetedActors = action.targetActors;
 		_preflightAction = default;
 
-		_UntargetAllActors();
+		ControllerActors.instance.UntargetAll();
 
 		// @TODO Change to queue action, to wait for hit animation(s) to finish.
 		_currentActor.TryBeginAction(action);
@@ -282,49 +251,6 @@ public partial class ComponentActionMenu : Control {
 		if (hasNext) {
 			_Begin(nextActor);
 		}
-	}
-
-	public void _SelectNextTarget(Direction direction) {
-		var enemies = ControllerActors.instance.Enemies.ToList();
-		if (enemies.Count == 0) {
-			return;
-		}
-
-		var currentTarget =
-			enemies.FirstOrDefault(actor => actor.IsTargeted) ??
-			enemies.First();
-
-		var currentPosition = currentTarget.Position;
-
-		var nextTarget = (ActorBase)null;
-		var closestDistance = float.MaxValue;
-
-		foreach (var enemy in enemies) {
-			var isDesiredDirection = direction switch {
-				Direction.Right => enemy.Position.X > currentPosition.X,
-				Direction.Left => enemy.Position.X < currentPosition.X,
-				_ => false
-			};
-
-			if (!isDesiredDirection) {
-				continue;
-			}
-
-			var distance = currentPosition.DistanceTo(enemy.Position);
-			if (distance > closestDistance) {
-				continue;
-			}
-
-			closestDistance = distance;
-			nextTarget = enemy;
-		}
-
-		if (nextTarget == null) {
-			return;
-		}
-
-		_UntargetAllActors();
-		nextTarget.Target();
 	}
 
 	public override void _Input(InputEvent @event) {
