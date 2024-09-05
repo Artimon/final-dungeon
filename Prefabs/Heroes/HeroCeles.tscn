@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://b33d2bqc2oggc"]
+[gd_scene load_steps=20 format=3 uid="uid://b33d2bqc2oggc"]
 
 [ext_resource type="PackedScene" uid="uid://boqe37txgrnq4" path="res://Prefabs/Heroes/HeroBase.tscn" id="1_fqv6t"]
+[ext_resource type="Resource" uid="uid://dfy7aj7g0rsgp" path="res://Configs/FireSpellActionSetup.tres" id="2_cm7yy"]
 [ext_resource type="Texture2D" uid="uid://djb0v5se57abm" path="res://Images/Characters/Celes Cast.png" id="2_dbe7o"]
 [ext_resource type="Texture2D" uid="uid://dkc72mk0g0hj0" path="res://Images/Characters/Celes Ko.png" id="2_yw8o0"]
 [ext_resource type="Texture2D" uid="uid://drtp1kips4rlq" path="res://Images/Characters/Celes Hit.png" id="3_jtb0d"]
@@ -112,6 +113,7 @@ animations = [{
 }]
 
 [node name="HeroCeles" instance=ExtResource("1_fqv6t")]
+actions = Array[Object]([ExtResource("2_cm7yy")])
 
 [node name="Hero AnimatedSprite2D" parent="Display Node2D" index="0"]
 sprite_frames = SubResource("SpriteFrames_diacg")

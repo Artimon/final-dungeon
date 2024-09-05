@@ -1437,6 +1437,7 @@ shader_parameter/Progress = 0.0
 stream = ExtResource("1_b4lxs")
 volume_db = -20.0
 autoplay = true
+parameters/looping = true
 
 [node name="ControllerAtb" type="Node" parent="Controllers"]
 script = ExtResource("2_nq46p")

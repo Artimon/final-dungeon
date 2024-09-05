@@ -80,20 +80,25 @@ public partial class ComponentActionMenu : Control {
 		}
 	}
 
-	public bool _TryGetActionType(InputEvent @event, out Action.ActionTypes actionType) {
+	public bool _TryGetAction(InputEvent @event, out Action action) {
 		if (@event.IsActionPressed("Bottom Action")) {
-			actionType = Action.ActionTypes.Attack;
+			action = new Action {
+				type = Action.ActionTypes.Attack
+			};
 
 			return true;
 		}
 
 		if (@event.IsActionPressed("Left Action")) {
-			actionType = Action.ActionTypes.Cast;
+			action = new Action {
+				type = Action.ActionTypes.Cast,
+				setup = _currentActor.actions[0]
+			};
 
 			return true;
 		}
 
-		actionType = default;
+		action = default;
 
 		return false;
 	}
@@ -103,7 +108,7 @@ public partial class ComponentActionMenu : Control {
 			return false;
 		}
 
-		var hasAction = _TryGetActionType(@event, out var actionType);
+		var hasAction = _TryGetAction(@event, out var action);
 		if (!hasAction) {
 			return false;
 		}
@@ -116,7 +121,7 @@ public partial class ComponentActionMenu : Control {
 			return false; // Maybe switch to next in queue.
 		}
 
-		_BeginTargetSelect(actionType);
+		_BeginTargetSelect(action);
 
 		return true;
 	}
@@ -225,7 +230,7 @@ public partial class ComponentActionMenu : Control {
 		return true;
 	}
 
-	public void _BeginTargetSelect(Action.ActionTypes actionType) {
+	public void _BeginTargetSelect(Action action) {
 		Hide();
 
 		_inputAudio.Play();
@@ -233,9 +238,7 @@ public partial class ComponentActionMenu : Control {
 		_UntargetAllActors();
 		_GetTargetEnemy().Target();
 
-		_preflightAction = new Action {
-			actionType = actionType
-		};
+		_preflightAction = action;
 	}
 
 	public void RefreshTargeting() {

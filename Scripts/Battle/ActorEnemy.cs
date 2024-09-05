@@ -86,7 +86,7 @@ public partial class ActorEnemy : ActorBase {
 		var targetHero = ControllerActors.instance.Heroes.GetRandomElement();
 
 		var action = new Action {
-			actionType = Action.ActionTypes.Attack,
+			type = Action.ActionTypes.Attack,
 			targetActors = new[] { targetHero }
 		};
 

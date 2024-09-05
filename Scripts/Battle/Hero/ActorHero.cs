@@ -1,4 +1,5 @@
-﻿using FinalDungeon.Battle.UserInterface;
+﻿using FinalDungeon.Battle.Config;
+using FinalDungeon.Battle.UserInterface;
 using Godot;
 
 namespace FinalDungeon.Battle;
@@ -27,6 +28,9 @@ public partial class ActorHero : ActorBase {
 
 	[Export]
 	public Weapon weapon;
+
+	[Export]
+	public ActionSetup[] actions;
 
 	public override void _Ready() {
 		_hits = 713f;

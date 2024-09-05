@@ -15,7 +15,7 @@ public partial class StateHeroCast : StateBase {
 	public override void OnEnter() {
 		_actor.animatedSprite.Play("Cast");
 
-		_castTimer.WaitTime = 4f; // @TODO: Get from spell/stats.
+		_castTimer.WaitTime = _actor.Action.setup.castTime;
 		_castTimer.Timeout += OnCastTimerTimeout;
 		_castTimer.Start();
 	}
@@ -26,9 +26,9 @@ public partial class StateHeroCast : StateBase {
 	}
 
 	private void OnCastTimerTimeout() {
-		GD.Print("Do spell cast!");
+		_actor.Action.setup.ApplyMechanic(_actor.Action.targetActors);
 
-		_actor.ActionFinished(true);
+		_actor.ActionFinished();
 		_stateMachine.TryEnter("Idle");
 	}
 }

@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://6kf5wb6svi41"]
+
+[ext_resource type="Script" path="res://Scripts/Battle/Spells/FireSpell.cs" id="1_e2008"]
+[ext_resource type="Texture2D" uid="uid://cc37mqn0squ2s" path="res://Images/Effects/FireSpell.png" id="2_j2ebj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5aqbo"]
+atlas = ExtResource("2_j2ebj")
+region = Rect2(0, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2eeyj"]
+atlas = ExtResource("2_j2ebj")
+region = Rect2(32, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdhyc"]
+atlas = ExtResource("2_j2ebj")
+region = Rect2(64, 0, 32, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ggllt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5aqbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2eeyj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdhyc")
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="FireSpell" type="Node2D" node_paths=PackedStringArray("animatedSprite")]
+script = ExtResource("1_e2008")
+animatedSprite = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -48)
+sprite_frames = SubResource("SpriteFrames_ggllt")
+frame = 2
+frame_progress = 1.0

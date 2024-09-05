@@ -1,4 +1,6 @@
-﻿namespace FinalDungeon.Battle;
+﻿using FinalDungeon.Battle.Config;
+
+namespace FinalDungeon.Battle;
 
 public class Action {
 	// @TODO Convert to Resource actions.
@@ -7,7 +9,8 @@ public class Action {
 		Cast
 	}
 
-	public ActionTypes actionType;
+	public ActionTypes type;
+	public ActionSetup setup;
 
 	public ActorBase[] targetActors;
 
@@ -18,7 +21,7 @@ public class Action {
 	}
 
 	public bool TryBeginAction(ActorBase actor) {
-		switch (actionType) {
+		switch (type) {
 			case ActionTypes.Attack:
 				return actor.stateMachine.TryEnter("Attack");
 
