@@ -16,6 +16,7 @@ public partial class FireSpell : Node2D {
 	public void Begin(ActorBase target, ActionSetup actionSetup, int nthTarget) {
 		_animatedSprite.Visible = false;
 
+		_timer.OneShot = true;
 		_timer.WaitTime = Mathf.Max(0.001f, MultiCastDelay * nthTarget);
 		_timer.Timeout += () => {
 			_animatedSprite.Visible = true;
