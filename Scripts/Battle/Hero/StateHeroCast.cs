@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using FinalDungeon.Battle.Effects;
+using Godot;
 
 namespace FinalDungeon.Battle;
 
@@ -10,6 +11,9 @@ public partial class StateHeroCast : StateBase {
 	[Export]
 	private Timer _castTimer;
 
+	[Export]
+	public SpellCastEffect _spellCastEffect;
+
 	public override string StateName => "Cast";
 
 	public override void OnEnter() {
@@ -18,11 +22,15 @@ public partial class StateHeroCast : StateBase {
 		_castTimer.WaitTime = _actor.Action.setup.castTime;
 		_castTimer.Timeout += OnCastTimerTimeout;
 		_castTimer.Start();
+
+		_spellCastEffect.Playing = true;
 	}
 
 	public override void OnExit() {
 		_castTimer.Timeout -= OnCastTimerTimeout;
 		_castTimer.Stop();
+
+		_spellCastEffect.Playing = false;
 	}
 
 	private void OnCastTimerTimeout() {

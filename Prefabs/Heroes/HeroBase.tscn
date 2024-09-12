@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://boqe37txgrnq4"]
+[gd_scene load_steps=38 format=3 uid="uid://boqe37txgrnq4"]
 
 [ext_resource type="Script" path="res://Scripts/Battle/Hero/ActorHero.cs" id="1_3ev8g"]
 [ext_resource type="Texture2D" uid="uid://ce6mdjfhbuf3y" path="res://Images/Characters/Terra Ko.png" id="2_japdb"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b74cgb78bo6tm" path="res://Images/Weapons/FrostDagger.png" id="9_q7y4k"]
 [ext_resource type="Texture2D" uid="uid://cggb1efd64aq7" path="res://Images/Effects/WeaponSlash.png" id="10_qcb7b"]
 [ext_resource type="AudioStream" uid="uid://bngen7q3l5g0f" path="res://Audio/AttackHit.ogg" id="11_sn3xp"]
+[ext_resource type="Script" path="res://Scripts/Battle/Effects/SpellCastEffect.cs" id="12_0t3sj"]
 [ext_resource type="PackedScene" uid="uid://cw7f3nfmkj42j" path="res://Prefabs/ActorCompDamageNumber.tscn" id="12_q6vk0"]
 [ext_resource type="AudioStream" uid="uid://dih5stxbw7uj1" path="res://Audio/Player Jump.wav" id="13_wvydo"]
 [ext_resource type="Script" path="res://Scripts/Battle/StateMachine/StateMachine.cs" id="14_tgtxr"]
@@ -138,6 +139,31 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6pv1l"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 24.0
+direction = Vector3(0, -1, 0)
+spread = 0.0
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = -1.60933e-05
+orbit_velocity_min = 0.35
+orbit_velocity_max = 0.5
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = -2.23517e-05
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -85.0
+radial_accel_max = -50.0
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = -2.23517e-06
+attractor_interaction_enabled = false
+turbulence_noise_scale = 10.0
+turbulence_noise_speed_random = 0.1
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.0
+turbulence_initial_displacement_min = 1.49012e-06
+turbulence_initial_displacement_max = 1.49012e-06
+
 [sub_resource type="Animation" id="Animation_5tjwy"]
 resource_name = "Hit"
 length = 0.4
@@ -215,6 +241,17 @@ frame_progress = 1.0
 stream = ExtResource("11_sn3xp")
 volume_db = -20.0
 
+[node name="SpellCastEffect" type="Node2D" parent="Display Node2D" node_paths=PackedStringArray("_particles")]
+position = Vector2(0, -10)
+script = ExtResource("12_0t3sj")
+_particles = NodePath("Spellcast GPUParticles2D")
+
+[node name="Spellcast GPUParticles2D" type="GPUParticles2D" parent="Display Node2D/SpellCastEffect"]
+z_index = -1
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_6pv1l")
+
 [node name="ActorCompDamageNumber" parent="." instance=ExtResource("12_q6vk0")]
 position = Vector2(0, -16)
 
@@ -251,10 +288,11 @@ script = ExtResource("18_eakqu")
 _actor = NodePath("../..")
 _stateMachine = NodePath("..")
 
-[node name="StateHeroCast" type="Node" parent="StateMachine" node_paths=PackedStringArray("_actor", "_castTimer", "_stateMachine")]
+[node name="StateHeroCast" type="Node" parent="StateMachine" node_paths=PackedStringArray("_actor", "_castTimer", "_spellCastEffect", "_stateMachine")]
 script = ExtResource("19_mgyp1")
 _actor = NodePath("../..")
 _castTimer = NodePath("Timer")
+_spellCastEffect = NodePath("../../Display Node2D/SpellCastEffect")
 _stateMachine = NodePath("..")
 
 [node name="Timer" type="Timer" parent="StateMachine/StateHeroCast"]
