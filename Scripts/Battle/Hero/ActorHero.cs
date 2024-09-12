@@ -72,6 +72,8 @@ public partial class ActorHero : ActorBase {
 
 			stateMachine.Force("Die");
 
+			ControllerBattle.instance.TryBattleEnd();
+
 			return;
 		}
 

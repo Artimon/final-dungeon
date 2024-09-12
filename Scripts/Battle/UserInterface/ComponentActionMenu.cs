@@ -26,6 +26,8 @@ public partial class ComponentActionMenu : Control {
 
 	public Func<InputEvent, bool>[] _inputHandlers;
 
+	public bool _isShuttingDown;
+
 	public override void _EnterTree() {
 		instance = this;
 
@@ -61,7 +63,22 @@ public partial class ComponentActionMenu : Control {
 		_actors.Enqueue(actor);
 	}
 
+	public void Shutdown() {
+		_isShuttingDown = true;
+
+		Hide();
+
+		ControllerActors.instance.UntargetAll();
+
+		_currentActor = null;
+		_actors.Clear();
+	}
+
 	public void _Begin(ActorHero actor) {
+		if (_isShuttingDown) {
+			return;
+		}
+
 		_currentActor = actor;
 		_currentActor.Target(); // No need to untarget later, since confirm untargets all.
 

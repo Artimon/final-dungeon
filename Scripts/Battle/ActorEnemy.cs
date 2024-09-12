@@ -78,6 +78,8 @@ public partial class ActorEnemy : ActorBase {
 		_sprite.Material = _deathMaterial;
 		_animationPlayer.Play("Death");
 
+		ControllerBattle.instance.TryBattleEnd();
+
 		return true;
 	}
 

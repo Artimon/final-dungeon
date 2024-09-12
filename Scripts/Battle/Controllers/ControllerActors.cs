@@ -14,6 +14,10 @@ public partial class ControllerActors : Node {
 	public IEnumerable<ActorBase> Enemies => _actors.Where(actor => actor.isEnemy);
 	public IEnumerable<ActorBase> Targeted => _actors.Where(actor => actor.IsTargeted);
 
+	public bool HasEnemies => Enemies.Any();
+
+	public bool HasHeroes => Heroes.Any(hero => !hero.IsDead);
+
 	public override void _EnterTree() {
 		instance = this;
 	}

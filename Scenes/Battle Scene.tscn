@@ -1,7 +1,8 @@
-[gd_scene load_steps=68 format=3 uid="uid://dcs3bu26h6v10"]
+[gd_scene load_steps=69 format=3 uid="uid://dcs3bu26h6v10"]
 
 [ext_resource type="AudioStream" uid="uid://tngdgnmuotdi" path="res://Audio/battle-bgm.mp3" id="1_b4lxs"]
 [ext_resource type="Script" path="res://Scripts/Battle/Controllers/ControllerAtb.cs" id="2_nq46p"]
+[ext_resource type="Script" path="res://Scripts/Battle/Controllers/ControllerBattle.cs" id="2_q0yjc"]
 [ext_resource type="Script" path="res://Scripts/Battle/Controllers/ControllerActors.cs" id="2_stuf5"]
 [ext_resource type="Texture2D" uid="uid://btdp55btmqf7b" path="res://Images/Forest Background.png" id="2_wlsai"]
 [ext_resource type="PackedScene" uid="uid://dj7uqfxwnchil" path="res://UserInterface/Elements/ElementHeroStatus.tscn" id="4_xlp1q"]
@@ -1438,6 +1439,10 @@ stream = ExtResource("1_b4lxs")
 volume_db = -20.0
 autoplay = true
 parameters/looping = true
+
+[node name="ControllerBattle" type="Node" parent="Controllers" node_paths=PackedStringArray("_actionMenu")]
+script = ExtResource("2_q0yjc")
+_actionMenu = NodePath("../../CanvasLayer/ComponentActionMenu")
 
 [node name="ControllerAtb" type="Node" parent="Controllers"]
 script = ExtResource("2_nq46p")
