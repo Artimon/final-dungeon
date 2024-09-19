@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_lconx")
 singleTargetEffect = ExtResource("2_yq4kp")
-power = 100.0
+power = 200.0
+requiredMana = 2
 castTime = 2.5
 targetSelect = ExtResource("3_fk3rc")

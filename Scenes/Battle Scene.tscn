@@ -1453,12 +1453,16 @@ script = ExtResource("2_stuf5")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ElementHeroStatus Terra" parent="CanvasLayer" instance=ExtResource("4_xlp1q")]
+offset_left = 170.0
+offset_top = 92.0
+offset_right = 170.0
+offset_bottom = 92.0
 
 [node name="ElementHeroStatus Celes" parent="CanvasLayer" instance=ExtResource("4_xlp1q")]
-offset_left = 8.0
-offset_top = 16.0
-offset_right = 48.0
-offset_bottom = 56.0
+offset_left = 178.0
+offset_top = 114.0
+offset_right = 218.0
+offset_bottom = 154.0
 
 [node name="ComponentActionMenu" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("_attackIcon", "_inputAudio")]
 layout_mode = 3

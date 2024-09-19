@@ -86,6 +86,8 @@ public partial class ComponentActionMenu : Control {
 	}
 
 	public bool _TryGetAction(InputEvent @event, out Action action) {
+		action = default;
+
 		if (@event.IsActionPressed("Bottom Action")) {
 			action = new Action {
 				type = Action.ActionTypes.Attack,
@@ -96,15 +98,18 @@ public partial class ComponentActionMenu : Control {
 		}
 
 		if (@event.IsActionPressed("Left Action")) {
+			var castAction = _currentActor.actions[1];
+			if (!_currentActor.CanCast(castAction)) {
+				return false;
+			}
+
 			action = new Action {
 				type = Action.ActionTypes.Cast,
-				setup = _currentActor.actions[1]
+				setup = castAction
 			};
 
 			return true;
 		}
-
-		action = default;
 
 		return false;
 	}

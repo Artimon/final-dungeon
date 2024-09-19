@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dj7uqfxwnchil"]
+[gd_scene load_steps=10 format=3 uid="uid://dj7uqfxwnchil"]
 
 [ext_resource type="Script" path="res://Scripts/Battle/UserInterface/ElementHeroStatus.cs" id="1_aart5"]
 [ext_resource type="Theme" uid="uid://dot4j2g5m155i" path="res://Images/Config/MainTheme.tres" id="2_ctd8r"]
@@ -6,30 +6,29 @@
 [ext_resource type="Texture2D" uid="uid://blvesijpkf74y" path="res://Images/HitsBarProgress.png" id="4_2tp80"]
 [ext_resource type="Texture2D" uid="uid://dnsxpmanmt2vs" path="res://Images/AtbBarUnder.png" id="5_lq14f"]
 [ext_resource type="Texture2D" uid="uid://rrgbwvniop56" path="res://Images/AtbBarProgress.png" id="6_2smio"]
+[ext_resource type="Script" path="res://Scripts/Battle/UserInterface/ComponentMana.cs" id="7_nfon3"]
+[ext_resource type="PackedScene" uid="uid://barfjwmoyy486" path="res://Prefabs/UserInterface/ManaIconElement.tscn" id="7_pkk8u"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6k122"]
 font_size = 8
 outline_size = 3
 outline_color = Color(0, 0, 0, 1)
 
-[node name="ElementHeroStatus" type="Control" node_paths=PackedStringArray("_nameLabel", "_hitsProgress", "_hitsLabel", "_atbProgress")]
+[node name="ElementHeroStatus" type="Control" node_paths=PackedStringArray("_nameLabel", "_hitsProgress", "_hitsLabel", "_atbProgress", "mana")]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 script = ExtResource("1_aart5")
 _nameLabel = NodePath("Control/Name Label")
 _hitsProgress = NodePath("Control/Hits Progress")
 _hitsLabel = NodePath("Control/Hits Label")
 _atbProgress = NodePath("Control/Atb Progress")
+mana = NodePath("Control/ComponentMana")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 169.0
-offset_top = 95.0
-offset_right = 279.0
-offset_bottom = 135.0
+offset_right = 110.0
+offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("2_ctd8r")
@@ -72,3 +71,48 @@ offset_bottom = 10.0
 text = "713"
 label_settings = SubResource("LabelSettings_6k122")
 horizontal_alignment = 2
+
+[node name="ComponentMana" type="Control" parent="Control" node_paths=PackedStringArray("_icons")]
+anchors_preset = 0
+offset_top = 13.0
+offset_bottom = 13.0
+script = ExtResource("7_nfon3")
+_icons = [NodePath("GridContainer/ManaIcon Element"), NodePath("GridContainer/ManaIcon Element2"), NodePath("GridContainer/ManaIcon Element3"), NodePath("GridContainer/ManaIcon Element4"), NodePath("GridContainer/ManaIcon Element5"), NodePath("GridContainer/ManaIcon Element6"), NodePath("GridContainer/ManaIcon Element7"), NodePath("GridContainer/ManaIcon Element8"), NodePath("GridContainer/ManaIcon Element9"), NodePath("GridContainer/ManaIcon Element10")]
+
+[node name="GridContainer" type="GridContainer" parent="Control/ComponentMana"]
+layout_mode = 2
+offset_right = 65.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 5
+
+[node name="ManaIcon Element" parent="Control/ComponentMana/GridContainer" instance=ExtResource("7_pkk8u")]
+layout_mode = 2
+
+[node name="ManaIcon Element2" parent="Control/ComponentMana/GridContainer" instance=ExtResource("7_pkk8u")]
+layout_mode = 2
+
+[node name="ManaIcon Element3" parent="Control/ComponentMana/GridContainer" instance=ExtResource("7_pkk8u")]
+layout_mode = 2
+
+[node name="ManaIcon Element4" parent="Control/ComponentMana/GridContainer" instance=ExtResource("7_pkk8u")]
+layout_mode = 2
+
+[node name="ManaIcon Element5" parent="Control/ComponentMana/GridContainer" instance=ExtResource("7_pkk8u")]
+layout_mode = 2
+
+[node name="ManaIcon Element6" parent="Control/ComponentMana/GridContainer" instance=ExtResource("7_pkk8u")]
+layout_mode = 2
+
+[node name="ManaIcon Element7" parent="Control/ComponentMana/GridContainer" instance=ExtResource("7_pkk8u")]
+layout_mode = 2
+
+[node name="ManaIcon Element8" parent="Control/ComponentMana/GridContainer" instance=ExtResource("7_pkk8u")]
+layout_mode = 2
+
+[node name="ManaIcon Element9" parent="Control/ComponentMana/GridContainer" instance=ExtResource("7_pkk8u")]
+layout_mode = 2
+
+[node name="ManaIcon Element10" parent="Control/ComponentMana/GridContainer" instance=ExtResource("7_pkk8u")]
+layout_mode = 2

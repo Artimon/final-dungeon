@@ -34,6 +34,7 @@ public partial class StateHeroCast : StateBase {
 	}
 
 	private void OnCastTimerTimeout() {
+		_actor.DrainMana(_actor.Action.setup);
 		_actor.Action.setup.ApplyMechanic(_actor.Action.targetActors);
 
 		_actor.ActionFinished();

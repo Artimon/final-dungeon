@@ -35,11 +35,22 @@ public partial class ActorHero : ActorBase {
 	public override void _Ready() {
 		_hits = 713f;
 		_maxHits = 978f;
+
+		_mana = 4;
+		_maxMana = 4;
+
 		_actionDuration = 5d;
 		_actionCooldown = (GD.Randf() + GD.Randf()) / 2d;
 
 		_status.ShowName(name);
 		_status.SetHits(_hits, _maxHits);
+
+		_status.mana.Mana = _mana;
+		_status.mana.MaxMana = _maxMana;
+
+		OnManaChanged += () => {
+			_status.mana.Mana = _mana;
+		};
 	}
 
 	public override bool TryBeginAction(Action action) {

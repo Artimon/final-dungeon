@@ -12,6 +12,9 @@ public partial class ActionSetup : Resource {
 	public float power;
 
 	[Export]
+	public int requiredMana;
+
+	[Export]
 	public float castTime;
 
 	[Export]

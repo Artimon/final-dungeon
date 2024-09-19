@@ -1,4 +1,5 @@
-﻿using FinalDungeon.Battle.UserInterface;
+﻿using FinalDungeon.Battle.Config;
+using FinalDungeon.Battle.UserInterface;
 using Godot;
 
 namespace FinalDungeon.Battle;
@@ -8,6 +9,9 @@ public abstract partial class ActorBase : Node2D {
 	public float _hits;
 	public float _maxHits;
 
+	public int _mana;
+	public int _maxMana;
+
 	public bool isEnemy;
 	public bool isInvulnerable;
 
@@ -15,6 +19,8 @@ public abstract partial class ActorBase : Node2D {
 
 	public double _actionDuration;
 	public double _actionCooldown; // 0...1
+
+	public event System.Action OnManaChanged;
 
 	[Export]
 	public StateMachine stateMachine;
@@ -68,6 +74,16 @@ public abstract partial class ActorBase : Node2D {
 		}
 
 		OnActionUpdate();
+	}
+
+	public bool CanCast(ActionSetup actionSetup) {
+		return _mana >= actionSetup.requiredMana;
+	}
+
+	public void DrainMana(ActionSetup actionSetup) {
+		_mana -= actionSetup.requiredMana;
+
+		OnManaChanged?.Invoke();
 	}
 
 	public void Target() {

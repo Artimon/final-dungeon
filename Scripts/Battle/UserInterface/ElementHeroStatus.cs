@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using FinalDungeon.Battle.UserInterface;
+using Godot;
 
 namespace FinalDungeon.Battle;
 
@@ -15,6 +16,9 @@ public partial class ElementHeroStatus : Control {
 
 	[Export]
 	public TextureProgressBar _atbProgress;
+
+	[Export]
+	public ComponentMana mana;
 
 	public void ShowName(string name) {
 		_nameLabel.Text = name;
